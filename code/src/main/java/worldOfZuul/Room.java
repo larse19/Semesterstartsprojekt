@@ -8,6 +8,7 @@ import java.util.HashMap;
  * A class representing the complex type of a room.
  * The class creates a room, and can be used for setting up connections between rooms,
  * as well as having the description of the room.
+ * 
  */
 public class Room 
 {
