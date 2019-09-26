@@ -1,18 +1,22 @@
 package worldOfZuul;
 
+/**
+ * This class handles most of the game logic.
+ * Calls the methods to get userinput, as well as using said input to change the rooms.
+ */
 public class Game 
 {
     private Parser parser;
     private Room currentRoom;
-        
 
+    // Constructor for the class game, creates all the rooms and sets up the parser.
     public Game() 
     {
         createRooms();
         parser = new Parser();
     }
 
-
+    // A method for assigning all the rooms and setting their exits. (This is where new rooms are to be added.)
     private void createRooms()
     {
         Room outside, theatre, pub, lab, office;
@@ -39,12 +43,14 @@ public class Game
         currentRoom = outside;
     }
 
+    // The way the game is started is by running this method, which then starts the game loop.
     public void play() 
     {            
         printWelcome();
 
                 
         boolean finished = false;
+        // The game loop works like this:
         while (! finished) {
             Command command = parser.getCommand();
             finished = processCommand(command);
@@ -52,6 +58,7 @@ public class Game
         System.out.println("Thank you for playing.  Good bye.");
     }
 
+    // Method for showing the welcome message, this can be redefined in this method.
     private void printWelcome()
     {
         System.out.println();
@@ -62,6 +69,7 @@ public class Game
         System.out.println(currentRoom.getLongDescription());
     }
 
+    // This method handles the userinput and redirects the command to the correct method.
     private boolean processCommand(Command command) 
     {
         boolean wantToQuit = false;
@@ -85,6 +93,7 @@ public class Game
         return wantToQuit;
     }
 
+    // A method to print the help commands response.
     private void printHelp() 
     {
         System.out.println("You are lost. You are alone. You wander");
@@ -94,6 +103,7 @@ public class Game
         parser.showCommands();
     }
 
+    // A method to change the current room, it does this from a given command.
     private void goRoom(Command command) 
     {
         if(!command.hasSecondWord()) {
@@ -114,6 +124,7 @@ public class Game
         }
     }
 
+    // The method to quit the game.
     private boolean quit(Command command) 
     {
         if(command.hasSecondWord()) {

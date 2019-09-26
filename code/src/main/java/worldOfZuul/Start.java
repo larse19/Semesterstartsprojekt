@@ -1,7 +1,7 @@
 package worldOfZuul;
 
 /**
- * Start
+ * This class is here for the sole purpose of starting the game.
  */
 public class Start {
 

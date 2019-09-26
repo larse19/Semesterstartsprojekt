@@ -24,27 +24,32 @@ public class Command
     private CommandWord commandWord;
     private String secondWord;
 
+    // Constructor for the complex type Command, consisting of a CommandWord and a string secondWord.
     public Command(CommandWord commandWord, String secondWord)
     {
         this.commandWord = commandWord;
         this.secondWord = secondWord;
     }
 
+    // A way to get the commandword from the class Command.
     public CommandWord getCommandWord()
     {
         return commandWord;
     }
 
+    // A way to get the string secondWord from the class Command.
     public String getSecondWord()
     {
         return secondWord;
     }
 
+    // If the commandWord is unkown, this funtion returns true.
     public boolean isUnknown()
     {
         return (commandWord == CommandWord.UNKNOWN);
     }
 
+    // A check for wether or not the Command has a secondWord. (Will return false if it does not )
     public boolean hasSecondWord()
     {
         return (secondWord != null);
