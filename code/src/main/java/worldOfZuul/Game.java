@@ -8,6 +8,7 @@ public class Game
 {
     private Parser parser;
     private Room currentRoom;
+    private static int gameTick;
 
     // Constructor for the class game, creates all the rooms and sets up the parser.
     public Game() 
@@ -90,6 +91,9 @@ public class Game
         else if (commandWord == CommandWord.QUIT) {
             wantToQuit = quit(command);
         }
+        else if (commandWord == CommandWord.TEST) {
+            Customer c = new Customer();
+        }
         return wantToQuit;
     }
 
@@ -134,5 +138,9 @@ public class Game
         else {
             return true;
         }
+    }
+    
+    public static int getTick(){
+        return gameTick;
     }
 }
