@@ -25,3 +25,5 @@ hs_err_pid*
 # Local files
 /.vscode
 /local
+/code/.vscode
+/code/.settings

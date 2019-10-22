@@ -39,4 +39,12 @@ public class Customer {
             currentHp = 0;
         }
     }
+
+    public boolean isAlive() {
+        if (alive) {
+            return true;
+        } else {
+            return false;
+        }        
+    }
 }
