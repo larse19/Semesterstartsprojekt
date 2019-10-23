@@ -9,6 +9,8 @@ public class Inventory {
 
     public boolean putItem(String itemName, int itemCount) {
         boolean exist = false;
+        //Checks if there is room in inventory. 
+        //Currently number of individuel items limit the space, not the number of different items
         if (numberOfItems() + itemCount < this.size) {
             for (String i : itemList.keySet()) {
                 if (i == itemName) {
@@ -27,7 +29,8 @@ public class Inventory {
             return false;
         }
     }
-
+    
+    //return number of items in inventory
     private int numberOfItems() {
         int result = 0;
         for (String i : itemList.keySet()) {
