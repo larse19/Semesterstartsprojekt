@@ -52,7 +52,6 @@ public class Animal {
     //Collects product from animal, and adds it to inventory, if the animal is fed
     public void collectProduct(Inventory inventory) {
         if (this.fed) {
-            //Missing ingredient class to finish; following is example
             if (inventory.putItem(this.product, this.yieldCount)) {
                 this.fed = false;
                 System.out.println("You have collected " + this.yieldCount + this.product + ".");
