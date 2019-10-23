@@ -4,6 +4,11 @@ public class Item {
     private String name;
     private int saturation;
     
+    public Item(String name){
+        this.name = name;
+        this.saturation = 0;
+    }
+    
     public Item(String name, int sat){
         this.name = name;
         saturation = sat;

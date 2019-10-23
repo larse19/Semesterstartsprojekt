@@ -3,21 +3,21 @@ package worldOfZuul;
 public class Animal {
 
     private String name;
-    private Item product;
+    private String product;
     private boolean fed;
     private String animalFood;
     private int foodAmount, yieldCount;
 
-    public Animal(String name, Item product) {
+    public Animal(String name, String product) {
         this.name = name;
         this.product = product;
-        this.animalFood = "Seeds";
+        this.animalFood = "Grain";
         fed = false;
         this.foodAmount = 1;
         this.yieldCount = 1;
     }
 
-    public Animal(String name, Item product, String animalFood, int foodAmount, int yieldCount) {
+    public Animal(String name, String product, String animalFood, int foodAmount, int yieldCount) {
         this.name = name;
         this.product = product;
         this.animalFood = animalFood;
@@ -53,8 +53,7 @@ public class Animal {
     public void collectProduct(Inventory inventory) {
         if (this.fed) {
             //Missing ingredient class to finish; following is example
-            Ingredient product = new Ingredient(this.product);
-            if (inventory.putItem(product, this.yieldCount)) {
+            if (inventory.putItem(this.product, this.yieldCount)) {
                 this.fed = false;
                 System.out.println("You have collected " + this.yieldCount + this.product + ".");
             }
