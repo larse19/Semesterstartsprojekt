@@ -34,10 +34,7 @@ public class Recipe {
         product = foodProduct;
     }
     
-    /*
-    getter for recipelist in static context so it can be referenced elsewhere
-    this method is used to display in text the avaliable recipes
-    */
+    //getter for recipelist
     public static ArrayList<String> getRecipeList(){
         return recipeList;
     }
