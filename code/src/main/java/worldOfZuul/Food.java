@@ -3,7 +3,7 @@ package worldOfZuul;
 public class Food extends Item{
     private Recipe recipe;
     
-    //food constructor
+    //food constructorr
     public Food(String name, int saturation, Recipe recipe){
         super(name, saturation);
         this.recipe = recipe;
