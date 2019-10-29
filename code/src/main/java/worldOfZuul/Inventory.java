@@ -21,7 +21,7 @@ public class Inventory {
             if (!exist) {
                 itemList.put(itemName, itemCount);
             }
-            System.out.println(itemCount + itemName + " added to inventory.");
+            System.out.println(itemCount + " " + itemName + " added to inventory.");
             return true;
         }
         else{
