@@ -8,7 +8,8 @@ package worldOfZuul;
 public enum CommandWord
 {
     // List of the words that get registered as commandWords.
-    GO("go"), QUIT("quit"), HELP("help"), UNKNOWN("?"), TEST("test");
+    GO("go"), QUIT("quit"), HELP("help"), UNKNOWN("?"), TEST("test"), COLLECT("collect"),
+    FEED("feed");
     
     private String commandString;
     
