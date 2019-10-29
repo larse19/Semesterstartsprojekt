@@ -4,7 +4,7 @@ package worldOfZuul;
  * Field
  */
 public class Field extends Room {
-    private Ingredient crop;
+    private static Ingredient crop;
     /**
      * States:
      *  0 Empty
@@ -12,27 +12,34 @@ public class Field extends Room {
      *  2 growing
      *  3 Ready to harvest
      */
-    private int state;
+    private static int state;
+
     // Constructor
-    public Field(String description, String crop){
+    public Field(String description, String inCrop) {
         super(description);
-        this.crop = new Ingredient(crop);
+        crop = new Ingredient(inCrop);
+        state = 3;
+    }
+    // Second constructor
+    public Field(String description, Ingredient inCrop) {
+        super(description);
+        crop = inCrop;
         state = 3;
     }
 
-    public Ingredient getCrop() {
+    public static Ingredient getCrop() {
         return crop;
     }
 
-    public void setCrop(String crop ) {
-        this.crop = new Ingredient(crop); 
-    }
-    public void setCrop(Ingredient crop ) {
-        this.crop = crop; 
+    public static void setCrop(String inCrop) {
+        crop = new Ingredient(inCrop);
     }
 
+    public static void setCrop(Ingredient inCrop) {
+        crop = inCrop;
+    }
 
-    public boolean isReadyToHarvest() {
+    public static boolean isReadyToHarvest() {
         if (state == 3) {
             return true;
         } else {
@@ -40,25 +47,25 @@ public class Field extends Room {
         }
     }
 
-    public Ingredient harvest() {
+    public static Ingredient harvest() {
         state = 0;
         return getCrop();
     }
 
-    public void waterCrops() {
+    public static void waterCrops() {
         if (state == 1 || state == 2) {
             state++;
         } else {
             System.out.println("The field cannot be watered right now.");
         }
     }
-    
-    public void sowField(String crop) {
-        this.crop = new Ingredient(crop);
+
+    public static void sowField(String inCrop) {
+        crop = new Ingredient(inCrop);
         state = 1;
     }
-    public void sowField(Ingredient crop) {
-        this.crop = crop;
+    public static void sowField(Ingredient inCrop) {
+        crop = inCrop;
         state = 1;
     }
 }
