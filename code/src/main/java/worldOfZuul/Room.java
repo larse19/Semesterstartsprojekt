@@ -26,6 +26,7 @@ public class Room
         exits = new HashMap<String, Room>();
     }
     
+    //Second contructor that takes an array of strings that describe what interactebles are associatet with the room
     public Room(String description, String[] objects){
         this.description = description;
         exits = new HashMap<String, Room>();

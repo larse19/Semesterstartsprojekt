@@ -24,7 +24,8 @@ public class Game {
 
     // A method for assigning all the rooms and setting their exits. (This is where new rooms are to be added.)
     private void createRooms() {
-
+        
+        //instatiate rooms
         String[] animals = {"cow", "chicken"};
         this.barn = new Room("in the barn", animals);
 
@@ -111,27 +112,28 @@ public class Game {
             Customer c = new Customer();
         } else if (commandWord == CommandWord.COLLECT) {
             if ("milk".equals(command.getSecondWord())) {
-                if (this.currentRoom == this.barn) {
+                if (correctRoom(this.barn)) {
                     Animal cow = (Animal) getRoomsInteractor(this.currentRoom, "Cow");
                     cow.collectProduct(this.inventory);
                 }
             }
             else if("eggs".equals(command.getSecondWord())){
-                if(this.currentRoom == this.barn){
+                if(correctRoom(this.barn)){
                     Animal chicken = (Animal)getRoomsInteractor(this.currentRoom, "Chicken");
                     chicken.collectProduct(this.inventory);
                 }
             }
         }
         else if(commandWord == CommandWord.FEED){
+            this.inventory.putItem("Grain", 1);
             if("cow".equals(command.getSecondWord())){
-                if(this.currentRoom == this.barn){
+                if(correctRoom(this.barn)){
                     Animal cow = (Animal) getRoomsInteractor(this.currentRoom, "Cow");
                     cow.feed(this.inventory);
                 }
             }
             if("chicken".equals(command.getSecondWord())){
-                if(this.currentRoom == this.barn){
+                if(correctRoom(this.barn)){
                     Animal chicken = (Animal) getRoomsInteractor(this.currentRoom, "Chicken");
                     chicken.feed(this.inventory);
                 }
@@ -182,6 +184,7 @@ public class Game {
         return gameTick;
     }
 
+    //method for getting a specific Interactor from a room, takes the Interactors name as second parameter
     private Interactor getRoomsInteractor(Room room, String interactor) {
         ArrayList<Interactor> interactors = room.getInteractors();
         Interactor res = null;
@@ -192,5 +195,15 @@ public class Game {
         }
         return res;
 
+    }
+    //checks if the player is in a specific room
+    private boolean correctRoom(Room room){
+        if(this.currentRoom == room){
+            return true;
+        }
+        else{
+            System.out.println("This command can't be used in this room");
+            return false;
+        }
     }
 }
