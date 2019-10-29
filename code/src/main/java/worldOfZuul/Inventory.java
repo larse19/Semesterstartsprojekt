@@ -38,7 +38,12 @@ public class Inventory {
         }
         return result;
     }
-
+    
+    /*
+    sets down itemcount of items when used/removed
+    and removes the item from itemslot in inventory if
+    itemcount of an item goes below zero
+    */
     public boolean removeItem(String itemName, int itemCount) {
         if (itemCount < itemList.get(itemName)) {
             itemList.put(itemName, itemList.get(itemName) - itemCount);
@@ -50,7 +55,8 @@ public class Inventory {
             return false;
         }
     }
-
+    
+    //getter for item count of an item
     public void getItem(String itemName) {
         itemList.get(itemName);
     }
