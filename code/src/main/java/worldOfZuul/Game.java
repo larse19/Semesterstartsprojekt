@@ -155,7 +155,6 @@ public class Game {
             }
         }
         else if(commandWord == CommandWord.FEED){
-            this.inventory.putItem("Grain", 1);
             if("cow".equals(command.getSecondWord())){
                 if(correctRoom(this.barn)){
                     Animal cow = (Animal) getRoomsInteractor(this.currentRoom, "Cow");
