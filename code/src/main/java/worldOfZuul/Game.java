@@ -23,6 +23,7 @@ public class Game {
     }
 
     // A method for assigning all the rooms and setting their exits. (This is where new rooms are to be added.)
+
     private void createRooms() {
         
         //instatiate rooms
@@ -39,12 +40,14 @@ public class Game {
 
         /*
         Room outside, theatre, pub, lab, office;
+
       
         outside = new Room("outside the main entrance of the university");
         theatre = new Room("in a lecture theatre");
         pub = new Room("in the campus pub");
         lab = new Room("in a computing lab");
         office = new Room("in the computing admin office");
+        field = new Room("in the field");
         
         outside.setExit("east", theatre);
         outside.setExit("south", lab);
@@ -59,7 +62,11 @@ public class Game {
 
         office.setExit("west", lab);
 
+
+        currentRoom = field;
+
         currentRoom = outside;*/
+
     }
 
     // The way the game is started is by running this method, which then starts the game loop.
@@ -90,6 +97,7 @@ public class Game {
         boolean wantToQuit = false;
 
         CommandWord commandWord = command.getCommandWord();
+        String secondWord = command.getSecondWord();
 
         if (commandWord == CommandWord.UNKNOWN) {
             System.out.println("I don't know what you mean...");
@@ -108,7 +116,29 @@ public class Game {
             goRoom(command);
         } else if (commandWord == CommandWord.QUIT) {
             wantToQuit = quit(command);
-        } else if (commandWord == CommandWord.TEST) {
+
+        }
+        else if (commandWord == CommandWord.SOW) {
+            Room field = new Room("in the field");
+            if (currentRoom.getShortDescription() == field.getShortDescription()) {
+                Field.sowField(secondWord);
+            }
+        }
+        else if (commandWord == CommandWord.HARVEST) {
+            Room field = new Room("in the field");
+            if (currentRoom.getShortDescription() == field.getShortDescription()) {
+                if (Field.isReadyToHarvest()) {
+                    Field.harvest();
+                }
+            }
+        }
+        else if (commandWord == CommandWord.WATER) {
+            Room field = new Room("in the field");
+            if (currentRoom.getShortDescription() == field.getShortDescription()) {
+                Field.waterCrops();
+            }
+        }
+        else if (commandWord == CommandWord.TEST) {
             Customer c = new Customer();
         } else if (commandWord == CommandWord.COLLECT) {
             if ("milk".equals(command.getSecondWord())) {
