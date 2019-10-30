@@ -1,6 +1,6 @@
 package worldOfZuul;
 
-public class Animal {
+public class Animal extends Interactor {
 
     private String name;
     private String product;
@@ -54,7 +54,7 @@ public class Animal {
         if (this.fed) {
             if (inventory.putItem(this.product, this.yieldCount)) {
                 this.fed = false;
-                System.out.println("You have collected " + this.yieldCount + this.product + ".");
+                //System.out.println("You have collected " + this.yieldCount + this.product + ".");
             }
             else{
                 System.out.println("You don't have enough room in your inventory.");
@@ -62,6 +62,11 @@ public class Animal {
         } else {
             System.out.println(this.name + " needs to be fed.");
         }
+    }
+    
+    @Override
+    public String toString(){
+        return this.name;
     }
 
 }
