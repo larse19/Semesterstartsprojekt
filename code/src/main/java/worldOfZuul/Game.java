@@ -12,7 +12,7 @@ public class Game {
     private Room currentRoom;
     private static int gameTick;
     //All the rooms
-    private Room barn, field, kitchen, storefront, well;
+    private Room barn, fields, cropfield, cornfield, kitchen, well, restaurant, outside, bakery;
     private Inventory inventory;
 
     // Constructor for the class game, creates all the rooms and sets up the parser.
@@ -26,8 +26,56 @@ public class Game {
 
     private void createRooms() {
         
-        //instatiate rooms
+        this.outside = new Room("outside");    
+        this.kitchen = new Room("now in the kitchen where you can use all the ingredients you've collected to make prepare food for the people waiting");
+        this.restaurant = new Room("You are now in the restaurant where you can give the food you've made for the starving people");
+        this.well = new Room("You are now at the water well where you can collect fresh water");
+        this.fields = new Room("Here are your fields where you can grow crops or corn");
+        this.cornfield = new Room("You are now at your cornfield where you can harvest and grow more corn");
+        this.cropfield = new Room("You are now at your cropfield where you can harvest and grow crops like tomatos, salad and cucumber");
+        this.bakery = new Room("You are now in the bakery where you can bake bread and small cakes with the ingredients you have collected");
+        //this.storefront= new Room("Here you got the line of people youre trying to help");
+        
+                //instatiate rooms
         String[] animals = {"cow", "chicken"};
+        this.barn = new Room("in the barn where you can fed your animals and collect their milk and eggs", animals);
+
+        this.barn.setExit("north", this.kitchen);
+        this.barn.setExit("west", this.cornfield);
+        this.barn.setExit("east", this.well); 
+        
+        this.kitchen.setExit("south", this.barn);
+        this.kitchen.setExit("north", this.restaurant);
+        this.kitchen.setExit("west", this.fields);
+        this.kitchen.setExit("east", this.bakery);
+        
+        this.fields.setExit("east", this.kitchen);
+        this.fields.setExit("north", this.cropfield);
+        this.fields.setExit("south", this.cornfield);
+        
+        this.cornfield.setExit("north", this.fields);
+        this.cornfield.setExit("east", this.bakery);
+        
+        this.cropfield.setExit("south", this.fields);
+        this.cropfield.setExit("east", this.restaurant);
+        
+        this.restaurant.setExit("south", this.kitchen);
+        this.restaurant.setExit("west", this.cropfield);
+        this.restaurant.setExit("east", this.outside);
+        
+        this.bakery.setExit("west", this.kitchen);
+        this.bakery.setExit("south", this.well);
+        this.bakery.setExit("north", this.outside);
+        
+        this.well.setExit("north", this.bakery);
+        this.well.setExit("west", this.barn);
+        
+        
+        this.currentRoom = this.kitchen;
+        
+        
+        //instatiate rooms
+        /*String[] animals = {"cow", "chicken"};
         this.barn = new Room("in the barn", animals);
 
         this.kitchen = new Room("in the kitchen");
