@@ -4,7 +4,7 @@ import java.util.HashMap;
 
 public class Inventory {
 
-    private static int size = 5;
+    private final int size = 5;
     private HashMap<String, Integer> itemList = new HashMap<String, Integer>();
 
     public boolean putItem(String itemName, int itemCount) {

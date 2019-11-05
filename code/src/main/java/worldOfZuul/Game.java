@@ -12,64 +12,92 @@ public class Game {
     private Room currentRoom;
     private static int gameTick;
     //All the rooms
-    private Room barn, field, kitchen, storefront, well;
+    private Room barn, kitchen, storefront;
+    private Field cropfield, cornfield;
+    private Mill mill;
+    private Well well;
     private Inventory inventory;
+    private final ArrayList<Ingredient> possiblIngredients = new ArrayList<Ingredient>();
+    // Temporarily disabled until further functionality
+    private final ArrayList<Food> possibleFoods = new ArrayList<Food>();
+    // private final ArrayList<Recipe> possiblRecipes = new ArrayList<Recipe>();
 
     // Constructor for the class game, creates all the rooms and sets up the parser.
     public Game() {
         createRooms();
         parser = new Parser();
         this.inventory = new Inventory();
+        // All possible ingredients, food items, and recipe's
+        String[] edible = {"Carrot", "Milk", "Salat", "Cucumber"};
+        String[] nonEdible = { "Corn", "Flour", "Eggs", "Potato" };
+        for (String temp : nonEdible) {
+            this.possiblIngredients.add(new Ingredient(temp));
+        }
+        for (String temp : edible) {
+            this.possiblIngredients.add(new Ingredient(temp, 1, true));
+        }
+
+        this.possibleFoods.add(new Food("Bread", 5));
+        this.possibleFoods.add(new Food("Fried egg", 2));
+        // Temporarily disabled until further functionality
+        // this.possibleFoods.add(new Food("Bread", 2));
+        // Temp recipe list
+        // Item[] temp = {new Ingredient("Corn"), new Ingredient("Milk")};
+        // this.possiblRecipes.add(new Recipe(temp , this.possibleFoods.get(0)));
     }
 
-    // A method for assigning all the rooms and setting their exits. (This is where new rooms are to be added.)
+    // A method for assigning all the rooms and setting their exits. (This is where
+    // new rooms are to be added.)
 
     private void createRooms() {
+        String[] animals = { "cow", "chicken" };
+        this.barn = new Room("in the barn where you can fed your animals and collect their milk and eggs", animals);
+
+        this.kitchen = new Room(
+                "now in the kitchen where you can use all the ingredients you've collected to make prepare food for the people waiting");
+
+        this.storefront = new Room("now at the storefront where you can help the starving people");
+
+        this.cropfield = new Field("now at your cropfield where you can harvest and grow crops", "Potato");
+
+        this.cornfield = new Field("now at your cornfield where you can harvest and grow more corn", "Corn");
         
-        //instatiate rooms
-        String[] animals = {"cow", "chicken"};
-        this.barn = new Room("in the barn", animals);
-
-        this.kitchen = new Room("in the kitchen");
-
-        this.barn.setExit("south", this.kitchen);
-
-        this.kitchen.setExit("north", this.barn);
-
-        this.currentRoom = this.kitchen;
-
-        /*
-        Room outside, theatre, pub, lab, office;
-
-      
-        outside = new Room("outside the main entrance of the university");
-        theatre = new Room("in a lecture theatre");
-        pub = new Room("in the campus pub");
-        lab = new Room("in a computing lab");
-        office = new Room("in the computing admin office");
-        field = new Room("in the field");
+        this.well = new Well("now at the water well where you can collect fresh water");     
         
-        outside.setExit("east", theatre);
-        outside.setExit("south", lab);
-        outside.setExit("west", pub);
+        this.mill = new Mill("now at the mill where you can grind your corn to get flour");
+        
+        
+        
 
-        theatre.setExit("west", outside);
+        this.storefront.setExit("north", kitchen);
 
-        pub.setExit("east", outside);
+        this.kitchen.setExit("north", cornfield);
+        this.kitchen.setExit("west", cropfield);
+        this.kitchen.setExit("east", barn);
+        this.kitchen.setExit("south", storefront);
 
-        lab.setExit("north", outside);
-        lab.setExit("east", office);
+        this.well.setExit("east", cornfield);
+        this.well.setExit("south", cropfield);
 
-        office.setExit("west", lab);
+        this.barn.setExit("west", kitchen);
 
+        this.barn.setExit("north", mill);
 
-        currentRoom = field;
+        this.cornfield.setExit("west", well);
+        this.cornfield.setExit("south", kitchen);
 
-        currentRoom = outside;*/
+        this.cropfield.setExit("north", well);
+        this.cropfield.setExit("east", kitchen);
+
+        this.mill.setExit("south", barn);
+        this.mill.setExit("west", cornfield);
+
+        this.currentRoom = this.storefront;
 
     }
 
-    // The way the game is started is by running this method, which then starts the game loop.
+    // The way the game is started is by running this method, which then starts the
+    // game loop.
     public void play() {
         printWelcome();
 
@@ -85,31 +113,32 @@ public class Game {
     // Method for showing the welcome message, this can be redefined in this method.
     private void printWelcome() {
         System.out.println();
-        System.out.println("Welcome to the World of Zuul!");
-        System.out.println("World of Zuul is a new, incredibly boring adventure game.");
+        System.out.println("Welcome to the Hunger Games!");
+        System.out.println("Hunger games is a game about resource management and feeding the poor to end world hunger");
         System.out.println("Type '" + CommandWord.HELP + "' if you need help.");
         System.out.println();
         System.out.println(currentRoom.getLongDescription());
     }
 
-    // This method handles the userinput and redirects the command to the correct method.
+    // This method handles the userinput and redirects the command to the correct
+    // method.
     private boolean processCommand(Command command) {
         boolean wantToQuit = false;
 
         CommandWord commandWord = command.getCommandWord();
-        String secondWord = command.getSecondWord();
 
         if (commandWord == CommandWord.UNKNOWN) {
             System.out.println("I don't know what you mean...");
             return false;
         }
-        /*
-        This is where the game handles the commands. add if statements to check what command has been inputtet
-        Then check what room you are in, or if there are more rooms that allow that command, check if you are in any of them
-        unless it is a global command, then just skip the room check
-        If your command requires interaction with an Interactor, us the getRoomsInteractor() method to retrieve that object
-        Then call the method from the object, that you need       
-        */
+        /**
+         * This is where the game handles the commands. add if statements to check what
+         * command has been inputtet Then check what room you are in, or if there are
+         * more rooms that allow that command, check if you are in any of them unless it
+         * is a global command, then just skip the room check If your command requires
+         * interaction with an Interactor, us the getRoomsInteractor() method to
+         * retrieve that object Then call the method from the object, that you need
+         */
         if (commandWord == CommandWord.HELP) {
             printHelp();
         } else if (commandWord == CommandWord.GO) {
@@ -117,55 +146,68 @@ public class Game {
         } else if (commandWord == CommandWord.QUIT) {
             wantToQuit = quit(command);
 
-        }
-        else if (commandWord == CommandWord.SOW) {
-            Room field = new Room("in the field");
-            if (currentRoom.getShortDescription() == field.getShortDescription()) {
-                Field.sowField(secondWord);
+        } else if (commandWord == CommandWord.SOW) {
+            if (correctRoom(this.cropfield)) {
+                this.cropfield.sowField(command.getSecondWord());
+            } else if (correctRoom(this.cornfield)) {
+                this.cornfield.sowField(command.getSecondWord());
             }
-        }
-        else if (commandWord == CommandWord.HARVEST) {
-            Room field = new Room("in the field");
-            if (currentRoom.getShortDescription() == field.getShortDescription()) {
-                if (Field.isReadyToHarvest()) {
-                    Field.harvest();
+        } else if (commandWord == CommandWord.HARVEST) {
+            if (correctRoom(this.cropfield)) {
+                if (this.cropfield.isReadyToHarvest()) {
+                    this.inventory.putItem(this.cropfield.getCrop(), 1);
+                }
+
+            } else if (correctRoom(this.cornfield)) {
+                if (this.cornfield.isReadyToHarvest()) {
+                    this.inventory.putItem(this.cornfield.getCrop(), 1);
                 }
             }
-        }
-        else if (commandWord == CommandWord.WATER) {
-            Room field = new Room("in the field");
-            if (currentRoom.getShortDescription() == field.getShortDescription()) {
-                Field.waterCrops();
+        } else if (commandWord == CommandWord.WATER) {
+            if (correctRoom(this.cropfield)) {
+                this.cropfield.waterCrops();
+            } else if (correctRoom(this.cornfield)) {
+                this.cornfield.waterCrops();
             }
-        }
-        else if (commandWord == CommandWord.TEST) {
-            Customer c = new Customer();
+        } else if (commandWord == CommandWord.TEST) {
+            System.out.println("This is a test command");
         } else if (commandWord == CommandWord.COLLECT) {
             if ("milk".equals(command.getSecondWord())) {
                 if (correctRoom(this.barn)) {
                     Animal cow = (Animal) getRoomsInteractor(this.currentRoom, "Cow");
                     cow.collectProduct(this.inventory);
                 }
-            }
-            else if("eggs".equals(command.getSecondWord())){
-                if(correctRoom(this.barn)){
-                    Animal chicken = (Animal)getRoomsInteractor(this.currentRoom, "Chicken");
+            } else if ("eggs".equals(command.getSecondWord())) {
+                if (correctRoom(this.barn)) {
+                    Animal chicken = (Animal) getRoomsInteractor(this.currentRoom, "Chicken");
                     chicken.collectProduct(this.inventory);
+                }
+            }
+
+            else if("water".equals(command.getSecondWord())){
+                if(correctRoom(this.well)) {
+                    this.well.collectWater(this.inventory);
                 }
             }
         }
         else if(commandWord == CommandWord.FEED){
             if("cow".equals(command.getSecondWord())){
                 if(correctRoom(this.barn)){
+
                     Animal cow = (Animal) getRoomsInteractor(this.currentRoom, "Cow");
                     cow.feed(this.inventory);
                 }
             }
-            if("chicken".equals(command.getSecondWord())){
-                if(correctRoom(this.barn)){
+            if ("chicken".equals(command.getSecondWord())) {
+                if (correctRoom(this.barn)) {
                     Animal chicken = (Animal) getRoomsInteractor(this.currentRoom, "Chicken");
                     chicken.feed(this.inventory);
                 }
+            }
+        }
+        else if(commandWord == CommandWord.GRIND) {
+            if(correctRoom(this.mill)){
+                this.mill.grindFlour(this.inventory);
             }
         }
         return wantToQuit;
@@ -234,5 +276,12 @@ public class Game {
             System.out.println("This command can't be used in this room");
             return false;
         }
+    }
+
+    private void tick() {
+        this.cornfield.grow();
+        this.cropfield.grow();
+
+        gameTick++;
     }
 }

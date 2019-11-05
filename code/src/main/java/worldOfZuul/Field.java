@@ -4,68 +4,61 @@ package worldOfZuul;
  * Field
  */
 public class Field extends Room {
-    private static Ingredient crop;
+    private String crop;
     /**
      * States:
      *  0 Empty
-     *  1 growing
+     *  1 Needs water
      *  2 growing
-     *  3 Ready to harvest
+     *  3 growing
+     *  4 Ready to harvest
      */
-    private static int state;
+    private int state;
 
     // Constructor
     public Field(String description, String inCrop) {
         super(description);
-        crop = new Ingredient(inCrop);
-        state = 3;
-    }
-    // Second constructor
-    public Field(String description, Ingredient inCrop) {
-        super(description);
         crop = inCrop;
-        state = 3;
+        state = 4;
     }
 
-    public static Ingredient getCrop() {
+    public String getCrop() {
         return crop;
     }
 
-    public static void setCrop(String inCrop) {
-        crop = new Ingredient(inCrop);
-    }
-
-    public static void setCrop(Ingredient inCrop) {
+    public void setCrop(String inCrop) {
         crop = inCrop;
     }
 
-    public static boolean isReadyToHarvest() {
-        if (state == 3) {
+    public boolean isReadyToHarvest() {
+        if (state == 4) {
             return true;
         } else {
             return false;
         }
     }
 
-    public static Ingredient harvest() {
+    public String harvest() {
         state = 0;
         return getCrop();
     }
 
-    public static void waterCrops() {
-        if (state == 1 || state == 2) {
+    public void waterCrops() {
+        if (state == 1) {
             state++;
         } else {
             System.out.println("The field cannot be watered right now.");
         }
     }
 
-    public static void sowField(String inCrop) {
-        crop = new Ingredient(inCrop);
-        state = 1;
-    }
-    public static void sowField(Ingredient inCrop) {
+    public void sowField(String inCrop) {
         crop = inCrop;
         state = 1;
+    }
+
+    public void grow(){
+        if(state >= 2 && state != 4){
+            state++;
+        }
     }
 }
