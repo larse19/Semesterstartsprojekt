@@ -11,7 +11,12 @@ import java.util.Scanner;
 public class Scoreboard {
 
     private int score;
-    private File myFile = new File("Scoreboard.csv");
+    private final File myFile;
+    
+    public Scoreboard(){
+        myFile = new File("Scoreboard.csv");
+        score = 0;
+    }
 
     public int getScore() {
         return score;
@@ -19,6 +24,10 @@ public class Scoreboard {
 
     public void setScore(int score) {
         this.score = score;
+    }
+    
+    public void addPoints(int points){
+        this.score += points;
     }
     
     public boolean saveHighscore(){

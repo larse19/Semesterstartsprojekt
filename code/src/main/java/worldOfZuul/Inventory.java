@@ -4,7 +4,7 @@ import java.util.HashMap;
 
 public class Inventory {
 
-    private static int size = 5;
+    private final int size = 5;
     private HashMap<String, Integer> itemList = new HashMap<String, Integer>();
 
     public boolean putItem(String itemName, int itemCount) {
@@ -21,7 +21,7 @@ public class Inventory {
             if (!exist) {
                 itemList.put(itemName, itemCount);
             }
-            System.out.println(itemCount + itemName + " added to inventory.");
+            System.out.println(itemCount + " " + itemName + " added to inventory.");
             return true;
         }
         else{
@@ -59,6 +59,10 @@ public class Inventory {
     //getter for item count of an item
     public void getItem(String itemName) {
         itemList.get(itemName);
+    }
+    
+    public HashMap<String, Integer> getInventory(){
+        return this.itemList;
     }
 
 }
