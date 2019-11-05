@@ -12,9 +12,10 @@ public class Game {
     private Room currentRoom;
     private static int gameTick;
     //All the rooms
-    private Room barn, kitchen, storefront, well;
+    private Room barn, kitchen, storefront;
     private Field cropfield, cornfield;
     private Mill mill;
+    private Well well;
     private Inventory inventory;
 
     // Constructor for the class game, creates all the rooms and sets up the parser.
@@ -38,7 +39,7 @@ public class Game {
         
         this.cornfield = new Field("now at your cornfield where you can harvest and grow more corn", "Corn");
         
-        this.well = new Room("now at the water well where you can collect fresh water");     
+        this.well = new Well("now at the water well where you can collect fresh water");     
         
         this.mill = new Mill("now at the mill where you can grind your corn to get flour");
         
@@ -164,6 +165,11 @@ public class Game {
                 if(correctRoom(this.barn)){
                     Animal chicken = (Animal)getRoomsInteractor(this.currentRoom, "Chicken");
                     chicken.collectProduct(this.inventory);
+                }
+            }
+            else if("water".equals(command.getSecondWord())){
+                if(correctRoom(this.well)) {
+                    this.well.collectWater(this.inventory);
                 }
             }
         }
