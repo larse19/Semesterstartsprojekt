@@ -1,3 +1,4 @@
+
 package worldOfZuul;
 
 //This Class creates a Food object, 
@@ -17,11 +18,9 @@ public class CookingSystem {
         recipe.put("bread", bread);
         
         //flere opskrifter.....
-        
-        
-        
+ 
     }
-    
+
     public void cook(String foodProduct, Inventory inv){
         
         HashMap<String, Integer> recipe = this.recipe.get(foodProduct);
@@ -35,17 +34,9 @@ public class CookingSystem {
         else{
             System.out.println("You don't have the ingredients needed.");
         }
-        
     }
-   
-    
-  
 
- 
-    
-    
         //Checks if the recipeList matches the itemList.
-    
     private static boolean check(HashMap<String, Integer> recipeList, HashMap<String, Integer> itemList) {
         boolean hasAllItems = true;
 
@@ -57,16 +48,5 @@ public class CookingSystem {
             }
         }
         return hasAllItems;
-        
-    
-    
-    
-    
-    }
-    
-    
-    
+    }   
 }
-
-
-
