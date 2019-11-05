@@ -31,7 +31,7 @@ public class Game {
         String[] animals = {"cow", "chicken"};
         this.barn = new Room("in the barn where you can fed your animals and collect their milk and eggs", animals);
         
-        this.kitchen = new Room("now in the kitchen where you can use all the ingredients you've collected to make prepare food for the people waiting");
+        this.kitchen = new Room("now in the kitchen where you can use all the ingredients you've collected to prepare food for the people waiting");
         
         this.storefront = new Room("now at the storefront where you can help the starving people");
         
@@ -89,8 +89,8 @@ public class Game {
     // Method for showing the welcome message, this can be redefined in this method.
     private void printWelcome() {
         System.out.println();
-        System.out.println("Welcome to the World of Zuul!");
-        System.out.println("World of Zuul is a new, incredibly boring adventure game.");
+        System.out.println("Welcome to the Hunger Games");
+        System.out.println("Hunger games is an realistic strategy simulator where you can learn how to manage farming and help starving people");
         System.out.println("Type '" + CommandWord.HELP + "' if you need help.");
         System.out.println();
         System.out.println(currentRoom.getLongDescription());
@@ -197,8 +197,6 @@ public class Game {
 
     // A method to print the help commands response.
     private void printHelp() {
-        System.out.println("You are lost. You are alone. You wander");
-        System.out.println("around at the university.");
         System.out.println();
         System.out.println("Your command words are:");
         parser.showCommands();
