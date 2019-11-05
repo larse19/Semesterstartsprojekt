@@ -17,6 +17,7 @@ public class Game {
     private Mill mill;
     private Well well;
     private Inventory inventory;
+    private static Scoreboard sb;
     private final ArrayList<Ingredient> possiblIngredients = new ArrayList<Ingredient>();
     // Temporarily disabled until further functionality
     private final ArrayList<Food> possibleFoods = new ArrayList<Food>();
@@ -283,5 +284,9 @@ public class Game {
         this.cropfield.grow();
 
         gameTick++;
+    }
+    
+    public static Scoreboard getScoreboard(){
+        return Game.sb;
     }
 }
