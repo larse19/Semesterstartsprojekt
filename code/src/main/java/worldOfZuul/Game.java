@@ -17,7 +17,8 @@ public class Game {
     private Mill mill;
     private Well well;
     private Inventory inventory;
-    private final ArrayList<Ingredient> possiblIngredients = new ArrayList<Ingredient>();
+    private final String[] edible = {"carrot", "milk", "salat", "cucumber"};
+    private final String[] nonEdible = { "corn", "flour", "eggs", "potato" };
     // Temporarily disabled until further functionality
     private final ArrayList<Food> possibleFoods = new ArrayList<Food>();
     // private final ArrayList<Recipe> possiblRecipes = new ArrayList<Recipe>();
@@ -27,23 +28,10 @@ public class Game {
         createRooms();
         parser = new Parser();
         this.inventory = new Inventory();
-        // All possible ingredients, food items, and recipe's
-        String[] edible = {"Carrot", "Milk", "Salat", "Cucumber"};
-        String[] nonEdible = { "Corn", "Flour", "Eggs", "Potato" };
-        for (String temp : nonEdible) {
-            this.possiblIngredients.add(new Ingredient(temp));
-        }
-        for (String temp : edible) {
-            this.possiblIngredients.add(new Ingredient(temp, 1, true));
-        }
+        
+        this.possibleFoods.add(new Food("bread", 5));
+        this.possibleFoods.add(new Food("fried egg", 2));
 
-        this.possibleFoods.add(new Food("Bread", 5));
-        this.possibleFoods.add(new Food("Fried egg", 2));
-        // Temporarily disabled until further functionality
-        // this.possibleFoods.add(new Food("Bread", 2));
-        // Temp recipe list
-        // Item[] temp = {new Ingredient("Corn"), new Ingredient("Milk")};
-        // this.possiblRecipes.add(new Recipe(temp , this.possibleFoods.get(0)));
     }
 
     // A method for assigning all the rooms and setting their exits. (This is where
