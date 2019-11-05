@@ -12,10 +12,12 @@ public class Game {
     private Room currentRoom;
     private static int gameTick;
     //All the rooms
-    private Room barn, kitchen, storefront;
+    private Room kitchen;
+    private CustomerController storefront;
     private Field cropfield, cornfield;
     private Mill mill;
     private Well well;
+    private Barn barn;
     private Inventory inventory;
     private static Scoreboard sb;
     private final ArrayList<Ingredient> possiblIngredients = new ArrayList<Ingredient>();
@@ -28,9 +30,10 @@ public class Game {
         createRooms();
         parser = new Parser();
         this.inventory = new Inventory();
+        this.sb = new Scoreboard();
         // All possible ingredients, food items, and recipe's
-        String[] edible = {"Carrot", "Milk", "Salat", "Cucumber"};
-        String[] nonEdible = { "Corn", "Flour", "Eggs", "Potato" };
+        String[] edible = {"carrot", "milk", "salat", "cucumber"};
+        String[] nonEdible = { "Corn", "flour", "eggs", "potato" };
         for (String temp : nonEdible) {
             this.possiblIngredients.add(new Ingredient(temp));
         }
@@ -38,8 +41,8 @@ public class Game {
             this.possiblIngredients.add(new Ingredient(temp, 1, true));
         }
 
-        this.possibleFoods.add(new Food("Bread", 5));
-        this.possibleFoods.add(new Food("Fried egg", 2));
+        this.possibleFoods.add(new Food("bread", 5));
+        this.possibleFoods.add(new Food("fried egg", 2));
         // Temporarily disabled until further functionality
         // this.possibleFoods.add(new Food("Bread", 2));
         // Temp recipe list
@@ -51,13 +54,12 @@ public class Game {
     // new rooms are to be added.)
 
     private void createRooms() {
-        String[] animals = { "cow", "chicken" };
-        this.barn = new Room("in the barn where you can fed your animals and collect their milk and eggs", animals);
+        this.barn = new Barn("in the barn where you can fed your animals and collect their milk and eggs");
 
         this.kitchen = new Room(
                 "now in the kitchen where you can use all the ingredients you've collected to make prepare food for the people waiting");
 
-        this.storefront = new Room("now at the storefront where you can help the starving people");
+        this.storefront = new CustomerController("now at the storefront where you can help the starving people");
 
         this.cropfield = new Field("now at your cropfield where you can harvest and grow crops", "Potato");
 
@@ -101,6 +103,7 @@ public class Game {
     // game loop.
     public void play() {
         printWelcome();
+        System.out.println(sb.getScore());
 
         boolean finished = false;
         // The game loop works like this:
@@ -147,13 +150,17 @@ public class Game {
         } else if (commandWord == CommandWord.QUIT) {
             wantToQuit = quit(command);
 
-        } else if (commandWord == CommandWord.SOW) {
+        } 
+        //Sow crops
+        else if (commandWord == CommandWord.SOW) {
             if (correctRoom(this.cropfield)) {
                 this.cropfield.sowField(command.getSecondWord());
             } else if (correctRoom(this.cornfield)) {
                 this.cornfield.sowField(command.getSecondWord());
             }
-        } else if (commandWord == CommandWord.HARVEST) {
+        } 
+        //Harvest crops
+        else if (commandWord == CommandWord.HARVEST) {
             if (correctRoom(this.cropfield)) {
                 if (this.cropfield.isReadyToHarvest()) {
                     this.inventory.putItem(this.cropfield.getCrop(), 1);
@@ -164,23 +171,30 @@ public class Game {
                     this.inventory.putItem(this.cornfield.getCrop(), 1);
                 }
             }
-        } else if (commandWord == CommandWord.WATER) {
+        } 
+        //Water crops
+        else if (commandWord == CommandWord.WATER) {
             if (correctRoom(this.cropfield)) {
                 this.cropfield.waterCrops();
             } else if (correctRoom(this.cornfield)) {
                 this.cornfield.waterCrops();
             }
-        } else if (commandWord == CommandWord.TEST) {
+        } 
+        
+        else if (commandWord == CommandWord.TEST) {
             System.out.println("This is a test command");
-        } else if (commandWord == CommandWord.COLLECT) {
+            
+        }
+        //Collect products
+        else if (commandWord == CommandWord.COLLECT) {
             if ("milk".equals(command.getSecondWord())) {
                 if (correctRoom(this.barn)) {
-                    Animal cow = (Animal) getRoomsInteractor(this.currentRoom, "Cow");
+                    Animal cow = this.barn.getAnimal("cow");
                     cow.collectProduct(this.inventory);
                 }
             } else if ("eggs".equals(command.getSecondWord())) {
                 if (correctRoom(this.barn)) {
-                    Animal chicken = (Animal) getRoomsInteractor(this.currentRoom, "Chicken");
+                    Animal chicken = this.barn.getAnimal("chicken");
                     chicken.collectProduct(this.inventory);
                 }
             }
@@ -191,24 +205,47 @@ public class Game {
                 }
             }
         }
+        //Feed cow or chicken
         else if(commandWord == CommandWord.FEED){
             if("cow".equals(command.getSecondWord())){
                 if(correctRoom(this.barn)){
 
-                    Animal cow = (Animal) getRoomsInteractor(this.currentRoom, "Cow");
+                    Animal cow = this.barn.getAnimal("cow");
                     cow.feed(this.inventory);
                 }
             }
             if ("chicken".equals(command.getSecondWord())) {
                 if (correctRoom(this.barn)) {
-                    Animal chicken = (Animal) getRoomsInteractor(this.currentRoom, "Chicken");
+                    Animal chicken = this.barn.getAnimal("chicken");
                     chicken.feed(this.inventory);
                 }
             }
         }
+        //Grind corn to flour
         else if(commandWord == CommandWord.GRIND) {
             if(correctRoom(this.mill)){
                 this.mill.grindFlour(this.inventory);
+            }
+        }
+        //Give food or edible ingredient to customer
+        else if(commandWord == CommandWord.GIVE){           
+            if(correctRoom(this.storefront)){
+                for(Food food : this.possibleFoods){
+                    if(command.getSecondWord().equals(food.getName())){
+                        storefront.feedCustomer(food, this.inventory);
+                    }
+                }
+                for(Ingredient ingredient : this.possiblIngredients){
+                    if(command.getSecondWord().equals(ingredient.getName())){
+                        storefront.feedCustomer(ingredient, this.inventory);
+                    }
+                }
+            }
+        }
+        //Get customer HP
+        else if(commandWord == CommandWord.CUSTOMER){
+            if("hp".equals(command.getSecondWord())){
+                System.out.println("The customer has: " + storefront.getHp() + " health.");
             }
         }
         return wantToQuit;
@@ -256,18 +293,6 @@ public class Game {
         return gameTick;
     }
 
-    //method for getting a specific Interactor from a room, takes the Interactors name as second parameter
-    private Interactor getRoomsInteractor(Room room, String interactor) {
-        ArrayList<Interactor> interactors = room.getInteractors();
-        Interactor res = null;
-        for (Interactor in : interactors) {
-            if (interactor == in.toString()) {
-                res = in;
-            }
-        }
-        return res;
-
-    }
     //checks if the player is in a specific room
     private boolean correctRoom(Room room){
         if(this.currentRoom == room){
@@ -282,6 +307,7 @@ public class Game {
     private void tick() {
         this.cornfield.grow();
         this.cropfield.grow();
+        this.storefront.updateCustomer();
 
         gameTick++;
     }

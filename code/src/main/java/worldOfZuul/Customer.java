@@ -36,7 +36,7 @@ public class Customer {
     }
 
     public void damage() {
-        if (this.tickCounter == 3) {
+        if (this.tickCounter == 5) {
             this.currentHp -= 1;
             totalDmg++;
             if (currentHp == 0) {

@@ -4,13 +4,14 @@ import java.util.HashMap;
 
 public class Inventory {
 
-    private final int size = 5;
+    private final int size = 10;
     private HashMap<String, Integer> itemList = new HashMap<String, Integer>();
-
+    
+    
     public boolean putItem(String itemName, int itemCount) {
         boolean exist = false;
         //Checks if there is room in inventory. 
-        //Currently number of individuel items limit the space, not the number of different items
+        //The number of different items, limits the size, there currently isn't a stack limit for each item
         if (numberOfItems() + itemCount < this.size) {
             for (String i : itemList.keySet()) {
                 if (i == itemName) {
@@ -34,7 +35,7 @@ public class Inventory {
     private int numberOfItems() {
         int result = 0;
         for (String i : itemList.keySet()) {
-            result += itemList.get(i);
+            result++;
         }
         return result;
     }
@@ -64,5 +65,5 @@ public class Inventory {
     public HashMap<String, Integer> getInventory(){
         return this.itemList;
     }
-
+    
 }

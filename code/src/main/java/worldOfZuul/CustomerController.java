@@ -31,32 +31,36 @@ public class CustomerController extends Room {
         }
     }
 
-    public void feedCustomer(Food food, Inventory inv) {
+    public void feedCustomer(Item item, Inventory inv) {
 
-        if (inv.removeItem(food.getName(), 1)) {
-            int sat = food.getSaturation();
+        if (item instanceof Food) {
+            Food food = (Food) item;
+            if (inv.removeItem(food.getName(), 1)) {
+                int sat = food.getSaturation();
 
-            currentCustomer.addHP(sat);
-            fullyFed();
-        } else {
-            System.out.println("You don't have any " + food.getName());
-        }
-    }
-
-    public void feedCustomer(Ingredient ingredient, Inventory inv) {
-
-        if (ingredient.getEdible()) {
-            if (inv.removeItem(ingredient.getName(), 1)) {
-                int sat = ingredient.getSaturation();
                 currentCustomer.addHP(sat);
+                System.out.println("The customer feasts on the " + food.getName() + " and gains " + food.getSaturation() + " hp!");
                 fullyFed();
             } else {
-                System.out.println("You don't have any " + ingredient.getName());
+                System.out.println("You don't have any " + food.getName());
             }
+        } else if (item instanceof Ingredient) {
+            Ingredient ingredient = (Ingredient) item;
+            if (ingredient.getEdible()) {
+                if (inv.removeItem(ingredient.getName(), 1)) {
+                    int sat = ingredient.getSaturation();
+                    currentCustomer.addHP(sat);
+                    System.out.println("The customer consumes the " + ingredient.getName() + " and gains " + ingredient.getSaturation() + " hp!");
+                    fullyFed();
+                } else {
+                    System.out.println("You don't have any " + ingredient.getName());
+                }
 
-        } else {
-            System.out.println("You can't eat " + ingredient.getName());
+            } else {
+                System.out.println("You can't eat " + ingredient.getName());
+            }
         }
+
     }
 
     public void newCustomer() {

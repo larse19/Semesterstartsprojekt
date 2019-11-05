@@ -15,7 +15,7 @@ public class Room
 {
     private String description;
     private HashMap<String, Room> exits;
-    private ArrayList<Interactor> objects;
+    //private ArrayList<Interactor> objects;
     /**
      * Constructor of the room class.
      * The room is initialized with the help of the description of the room as the input.
@@ -24,23 +24,6 @@ public class Room
     {
         this.description = description;
         exits = new HashMap<String, Room>();
-    }
-    
-    //Second contructor that takes an array of strings that describe what interactebles are associatet with the room
-    public Room(String description, String[] objects){
-        this.description = description;
-        exits = new HashMap<String, Room>();
-        this.objects = new ArrayList<>();
-        
-        for (String object : objects){
-            if("cow".equals(object)){
-                //Interactor cow = new Animal("Cow", "Milk");
-                this.objects.add(new Animal("Cow", "Milk"));
-            }
-            else if("chicken".equals(object)){
-                this.objects.add(new Animal("Chicken", "Egg"));
-            }
-        }
     }
 
     // A method for adding exits to a room.
@@ -77,9 +60,9 @@ public class Room
     {
         return exits.get(direction);
     }
-    
+    /*
     public ArrayList<Interactor> getInteractors(){
         return this.objects;
-    }
+    }*/
 }
 
