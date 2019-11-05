@@ -11,9 +11,11 @@ public class Game {
     private Parser parser;
     private Room currentRoom;
     private static int gameTick;
-    // All the rooms
-    private Room barn, kitchen, storefront, well;
+    //All the rooms
+    private Room barn, kitchen, storefront;
     private Field cropfield, cornfield;
+    private Mill mill;
+    private Well well;
     private Inventory inventory;
     private final ArrayList<Ingredient> possiblIngredients = new ArrayList<Ingredient>();
     // Temporarily disabled until further functionality
@@ -59,8 +61,13 @@ public class Game {
         this.cropfield = new Field("now at your cropfield where you can harvest and grow crops", "Potato");
 
         this.cornfield = new Field("now at your cornfield where you can harvest and grow more corn", "Corn");
-
-        this.well = new Room("now at the water well where you can collect fresh water");
+        
+        this.well = new Well("now at the water well where you can collect fresh water");     
+        
+        this.mill = new Mill("now at the mill where you can grind your corn to get flour");
+        
+        
+        
 
         this.storefront.setExit("north", kitchen);
 
@@ -74,11 +81,16 @@ public class Game {
 
         this.barn.setExit("west", kitchen);
 
+        this.barn.setExit("north", mill);
+
         this.cornfield.setExit("west", well);
         this.cornfield.setExit("south", kitchen);
 
         this.cropfield.setExit("north", well);
         this.cropfield.setExit("east", kitchen);
+
+        this.mill.setExit("south", barn);
+        this.mill.setExit("west", cornfield);
 
         this.currentRoom = this.storefront;
 
@@ -171,9 +183,17 @@ public class Game {
                     chicken.collectProduct(this.inventory);
                 }
             }
-        } else if (commandWord == CommandWord.FEED) {
-            if ("cow".equals(command.getSecondWord())) {
-                if (correctRoom(this.barn)) {
+
+            else if("water".equals(command.getSecondWord())){
+                if(correctRoom(this.well)) {
+                    this.well.collectWater(this.inventory);
+                }
+            }
+        }
+        else if(commandWord == CommandWord.FEED){
+            if("cow".equals(command.getSecondWord())){
+                if(correctRoom(this.barn)){
+
                     Animal cow = (Animal) getRoomsInteractor(this.currentRoom, "Cow");
                     cow.feed(this.inventory);
                 }
@@ -183,6 +203,11 @@ public class Game {
                     Animal chicken = (Animal) getRoomsInteractor(this.currentRoom, "Chicken");
                     chicken.feed(this.inventory);
                 }
+            }
+        }
+        else if(commandWord == CommandWord.GRIND) {
+            if(correctRoom(this.mill)){
+                this.mill.grindFlour(this.inventory);
             }
         }
         return wantToQuit;
