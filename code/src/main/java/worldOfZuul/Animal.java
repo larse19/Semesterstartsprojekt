@@ -1,6 +1,6 @@
 package worldOfZuul;
 
-public class Animal extends Interactor {
+public class Animal {
 
     private String name;
     private String product;
@@ -11,7 +11,7 @@ public class Animal extends Interactor {
     public Animal(String name, String product) {
         this.name = name;
         this.product = product;
-        this.animalFood = "Grain";
+        this.animalFood = "grain";
         fed = false;
         this.foodAmount = 1;
         this.yieldCount = 1;
