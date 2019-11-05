@@ -10,7 +10,7 @@ public enum CommandWord
     // List of the words that get registered as commandWords.
 
     GO("go"), QUIT("quit"), HELP("help"), UNKNOWN("?"), SOW("sow"), HARVEST("harvest"), WATER("water"), TEST("test"), COLLECT("collect"),
-    FEED("feed");
+    FEED("feed"), GRIND("grind");
 
     
     private String commandString;
