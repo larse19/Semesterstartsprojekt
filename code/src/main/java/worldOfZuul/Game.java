@@ -207,7 +207,6 @@ public class Game {
         }
         //Feed cow or chicken
         else if(commandWord == CommandWord.FEED){
-            inventory.putItem("corn", 1);
             if("cow".equals(command.getSecondWord())){
                 if(correctRoom(this.barn)){
 
@@ -229,8 +228,7 @@ public class Game {
             }
         }
         //Give food or edible ingredient to customer
-        else if(commandWord == CommandWord.GIVE){
-            
+        else if(commandWord == CommandWord.GIVE){           
             if(correctRoom(this.storefront)){
                 for(Food food : this.possibleFoods){
                     if(command.getSecondWord().equals(food.getName())){
