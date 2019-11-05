@@ -14,6 +14,7 @@ public class Game {
     //All the rooms
     private Room barn, kitchen, storefront, well;
     private Field cropfield, cornfield;
+    private Mill mill;
     private Inventory inventory;
 
     // Constructor for the class game, creates all the rooms and sets up the parser.
@@ -37,7 +38,9 @@ public class Game {
         
         this.cornfield = new Field("now at your cornfield where you can harvest and grow more corn", "Corn");
         
-        this.well = new Room("now at the water well where you can collect fresh water");        
+        this.well = new Room("now at the water well where you can collect fresh water");     
+        
+        this.mill = new Mill("now at the mill where you can grind your corn to get flour");
         
         
         
@@ -52,12 +55,16 @@ public class Game {
         this.well.setExit("south", cropfield);
         
         this.barn.setExit("west", kitchen);
+        this.barn.setExit("north", mill);
         
         this.cornfield.setExit("west", well);
         this.cornfield.setExit("south", kitchen);
         
         this.cropfield.setExit("north", well);
         this.cropfield.setExit("east", kitchen);
+        
+        this.mill.setExit("south", barn);
+        this.mill.setExit("west", cornfield);
         
         
         this.currentRoom = this.storefront;
@@ -172,6 +179,11 @@ public class Game {
                     Animal chicken = (Animal) getRoomsInteractor(this.currentRoom, "Chicken");
                     chicken.feed(this.inventory);
                 }
+            }
+        }
+        else if(commandWord == CommandWord.GRIND) {
+            if(correctRoom(this.mill)){
+                this.mill.grindFlour(this.inventory);
             }
         }
         return wantToQuit;
