@@ -203,9 +203,6 @@ public class Game {
 
     // A method to print the help commands response.
     private void printHelp() {
-        System.out.println("You are lost. You are alone. You wander");
-        System.out.println("around at the university.");
-        System.out.println();
         System.out.println("Your command words are:");
         parser.showCommands();
     }
