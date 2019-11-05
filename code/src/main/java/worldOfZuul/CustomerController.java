@@ -1,14 +1,16 @@
 package worldOfZuul;
 
 
-public class CustomerController {
+public class CustomerController extends Room{
 
     private Customer currentCustomer;
     private Scoreboard sb;
     
     
-    public void CustomerController(){
+    public CustomerController(String description){
+        super(description);
         currentCustomer = new Customer();
+        
     }
     
     public void feedCustomer(Food food){
