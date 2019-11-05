@@ -60,5 +60,9 @@ public class Inventory {
     public void getItem(String itemName) {
         itemList.get(itemName);
     }
+    
+    public HashMap<String, Integer> getInventory(){
+        return this.itemList;
+    }
 
 }
