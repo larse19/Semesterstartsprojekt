@@ -12,7 +12,8 @@ public class Game {
     private Room currentRoom;
     private static int gameTick;
     //All the rooms
-    private Room barn, kitchen, storefront, cropfield, cornfield, well;
+    private Room barn, kitchen, storefront, well;
+    private Field cropfield, cornfield;
     private Inventory inventory;
 
     // Constructor for the class game, creates all the rooms and sets up the parser.
@@ -32,9 +33,9 @@ public class Game {
         
         this.storefront = new Room("now at the storefront where you can help the starving people");
         
-        this.cropfield = new Field("now at your cropfield where you can harvest and grow crops", "potato");
+        this.cropfield = new Field("now at your cropfield where you can harvest and grow crops", "Potato");
         
-        this.cornfield = new Field("now at your cornfield where you can harvest and grow more corn", "corn");
+        this.cornfield = new Field("now at your cornfield where you can harvest and grow more corn", "Corn");
         
         this.well = new Room("now at the water well where you can collect fresh water");        
         
@@ -92,19 +93,19 @@ public class Game {
         boolean wantToQuit = false;
 
         CommandWord commandWord = command.getCommandWord();
-        String secondWord = command.getSecondWord();
+        //String secondWord = command.getSecondWord();
 
         if (commandWord == CommandWord.UNKNOWN) {
             System.out.println("I don't know what you mean...");
             return false;
         }
-        /*
-        This is where the game handles the commands. add if statements to check what command has been inputtet
-        Then check what room you are in, or if there are more rooms that allow that command, check if you are in any of them
-        unless it is a global command, then just skip the room check
-        If your command requires interaction with an Interactor, us the getRoomsInteractor() method to retrieve that object
-        Then call the method from the object, that you need       
-        */
+        /**
+         * This is where the game handles the commands. add if statements to check what command has been inputtet
+         * Then check what room you are in, or if there are more rooms that allow that command, check if you are in any of them
+         * unless it is a global command, then just skip the room check
+         * If your command requires interaction with an Interactor, us the getRoomsInteractor() method to retrieve that object
+         * Then call the method from the object, that you need 
+         */
         if (commandWord == CommandWord.HELP) {
             printHelp();
         } else if (commandWord == CommandWord.GO) {
@@ -114,28 +115,38 @@ public class Game {
 
         }
         else if (commandWord == CommandWord.SOW) {
-            Room field = new Room("in the field");
-            if (currentRoom.getShortDescription() == field.getShortDescription()) {
-                Field.sowField(secondWord);
+            if(correctRoom(this.cropfield)){
+                this.cropfield.sowField(command.getSecondWord());
+            }
+            else if(correctRoom(this.cornfield)){
+                this.cornfield.sowField(command.getSecondWord());
             }
         }
         else if (commandWord == CommandWord.HARVEST) {
-            Room field = new Room("in the field");
-            if (currentRoom.getShortDescription() == field.getShortDescription()) {
-                if (Field.isReadyToHarvest()) {
-                    Field.harvest();
+            if(correctRoom(this.cropfield)){
+                if (this.cropfield.isReadyToHarvest()) {
+                    this.inventory.putItem(this.cropfield.getCrop(), 1);
+                }
+                
+            }
+            else if(correctRoom(this.cornfield)){
+                if (this.cornfield.isReadyToHarvest()) {
+                    this.inventory.putItem(this.cornfield.getCrop(), 1);
                 }
             }
         }
         else if (commandWord == CommandWord.WATER) {
-            Room field = new Room("in the field");
-            if (currentRoom.getShortDescription() == field.getShortDescription()) {
-                Field.waterCrops();
+            if(correctRoom(this.cropfield)){
+                this.cropfield.waterCrops();
+            }
+            else if(correctRoom(this.cornfield)){
+                this.cornfield.waterCrops();
             }
         }
         else if (commandWord == CommandWord.TEST) {
-            Customer c = new Customer();
-        } else if (commandWord == CommandWord.COLLECT) {
+            System.out.println("This is a test command");
+        }
+        else if (commandWord == CommandWord.COLLECT) {
             if ("milk".equals(command.getSecondWord())) {
                 if (correctRoom(this.barn)) {
                     Animal cow = (Animal) getRoomsInteractor(this.currentRoom, "Cow");

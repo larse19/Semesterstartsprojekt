@@ -11,5 +11,5 @@ public class Barn extends Room{
         cow = new Animal("Cow", "Milk");
         chicken = new Animal("Chicken", "Egg");
     }
-    
+
 }
