@@ -4,7 +4,6 @@ public class CustomerController extends Room {
 
     private Customer currentCustomer;
     private Scoreboard sb;
-    private Inventory inv;
 
     public CustomerController(String description) {
         super(description);
@@ -12,7 +11,7 @@ public class CustomerController extends Room {
 
     }
 
-    public void feedCustomer(Food food) {
+    public void feedCustomer(Food food, Inventory inv) {
 
         if (inv.removeItem(food.getName(), 1)) {
             int sat = food.getSaturation();
@@ -23,10 +22,10 @@ public class CustomerController extends Room {
         }
     }
 
-    public void feedCustomer(Ingredient ingredient) {
+    public void feedCustomer(Ingredient ingredient, Inventory inv) {
 
         if (ingredient.getEdible()) {
-            if (this.inv.removeItem(ingredient.getName(), 1)) {
+            if (inv.removeItem(ingredient.getName(), 1)) {
                 int sat = ingredient.getSaturation();
                 currentCustomer.addHP(sat);
             } else {
