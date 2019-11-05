@@ -2,7 +2,7 @@ package worldOfZuul;
 import java.util.Random;
 
 public class Customer {
-    private int currentHp, startTick;
+    private int currentHp, startTick, startHp;
     private final int maxHp = 10;
     private boolean alive;
     
@@ -11,7 +11,7 @@ public class Customer {
         Random rand = new Random();
         currentHp = rand.nextInt(4) + 3;
         startTick = Game.getTick();
-        
+        startHp = currentHp;
         System.out.println(currentHp);
     }
     
@@ -46,5 +46,18 @@ public class Customer {
         } else {
             return false;
         }        
+    }
+    
+    public void addHP(int hp){
+        if(this.currentHp + hp <=10){
+            this.currentHp += hp;
+        }
+        else if(this.currentHp + hp > 10){
+            this.currentHp = 10;
+        }
+    }
+    
+    public int getGainedScore(){
+        return this.currentHp - this.startHp;
     }
 }
