@@ -21,6 +21,10 @@ public class Parser
         reader = new Scanner(System.in);
     }
 
+    public boolean secondWordIsValid(String secondWord){
+        return commands.secondWordIsValid(secondWord);
+    }
+    
     // Takes the input of the user and converts it to a Command.
     public Command getCommand() 
     {
@@ -35,8 +39,14 @@ public class Parser
         Scanner tokenizer = new Scanner(inputLine);
         if(tokenizer.hasNext()) {
             word1 = tokenizer.next();
-            if(tokenizer.hasNext()) {
-                word2 = tokenizer.next(); 
+            if(tokenizer.hasNext()){
+                word2 = "";
+            }
+            while(tokenizer.hasNext()) {
+                word2 += tokenizer.next();
+                if(tokenizer.hasNext()){
+                    word2 += " ";
+                }
             }
         }
         tokenizer.close();

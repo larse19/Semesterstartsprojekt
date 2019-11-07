@@ -40,6 +40,7 @@ public class Command
     // A way to get the string secondWord from the class Command.
     public String getSecondWord()
     {
+        
         return secondWord;
     }
 
