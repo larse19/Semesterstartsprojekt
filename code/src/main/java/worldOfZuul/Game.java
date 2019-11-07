@@ -18,8 +18,11 @@ public class Game {
     private Mill mill;
     private Well well;
     private Barn barn;
+    
     private Inventory inventory;
     private static Scoreboard sb;
+    private Account account;
+    private int startBalance = 10000;
 
     private final ArrayList<Food> possibleFoods = new ArrayList<Food>();
     private final ArrayList<Ingredient> possiblIngredients = new ArrayList<Ingredient>();
@@ -33,6 +36,7 @@ public class Game {
         createRooms();
         parser = new Parser();
         this.inventory = new Inventory();
+        this.account = new Account(startBalance);
 
         sb = new Scoreboard();
 
@@ -106,7 +110,12 @@ public class Game {
         while (!finished) {
             Command command = parser.getCommand();
             finished = processCommand(command);
+            if(this.account.getBalance() <= 0){
+                System.out.println("You have run out of money :C");
+                finished = true;
+            }
         }
+        System.out.println("Your score is:" + sb.getScore());
         sb.saveHighscore();
         System.out.println("Thank you for playing.  Goodbye.");
 
@@ -331,6 +340,7 @@ public class Game {
         this.cornfield.grow();
         this.cropfield.grow();
         this.storefront.updateCustomer();
+        this.account.substract(10);
 
         gameTick++;
     }
