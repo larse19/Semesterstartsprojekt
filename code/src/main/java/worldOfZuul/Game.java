@@ -249,6 +249,10 @@ public class Game {
 
         } else if(commandWord == CommandWord.SCORE){
             System.out.println("Your current score is: " + sb.getScore());
+
+        } else if(commandWord == CommandWord.RECIPE){
+            this.kitchen.printRecipe();
+
         }//Cook food in the kitchen
         else if(commandWord == CommandWord.COOK) {
             if(correctRoom(this.kitchen)){
