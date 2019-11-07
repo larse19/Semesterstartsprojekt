@@ -27,7 +27,6 @@ public class Game {
     private final String[] nonEdible = {"corn", "flour", "egg", "butter", "water"};
 
 
-
     // Constructor for the class game, creates all the rooms and sets up the parser.
     public Game() {
         createRooms();
@@ -259,6 +258,8 @@ public class Game {
             }
         } else if(commandWord == CommandWord.SCORE){
             System.out.println("Your current score is: " + sb.getScore());
+        } else if(commandWord == CommandWord.RECIPE){
+            this.kitchen.printRecipe();
         }
         return wantToQuit;
     }

@@ -72,5 +72,16 @@ public class CookingSystem {
             }
         }
         return hasAllItems;
-    }   
+    }
+
+    public void printRecipe() {
+        System.out.println("All the available recipes are:");
+        for (String food : this.recipe.keySet()) {
+            System.out.println("  " + food);
+            for (String ing : this.recipe.get(food).keySet()) {
+                System.out.println("    " + this.recipe.get(food).get(ing) + " " + ing);
+            }
+            System.out.println("");
+        }
+    }
 }
