@@ -20,7 +20,7 @@ public class CookingSystem {
         HashMap<String, Integer> friedEgg = new HashMap(Map.of("egg", 1));
         recipe.put("fried egg", friedEgg);
         
-        
+
         HashMap<String, Integer> boiledEgg = new HashMap(Map.of("egg", 1, "water", 1));
         recipe.put("boiled egg", boiledEgg);
        

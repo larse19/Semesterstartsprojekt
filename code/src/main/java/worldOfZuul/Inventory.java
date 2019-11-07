@@ -78,4 +78,13 @@ public class Inventory {
         return this.itemList;
     }
     
+    @Override
+    public String toString(){
+        String res = "";
+        for(String key : this.itemList.keySet()){
+            System.out.println(itemList.get(key) + " " + key);
+        }
+        return res;
+    }
+    
 }
