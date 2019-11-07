@@ -111,6 +111,7 @@ public class Game {
             Command command = parser.getCommand();
             finished = processCommand(command);
         }
+        sb.saveHighscore();
         System.out.println("Thank you for playing.  Goodbye.");
     }
 
