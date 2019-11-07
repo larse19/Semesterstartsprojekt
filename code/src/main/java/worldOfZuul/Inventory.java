@@ -46,15 +46,27 @@ public class Inventory {
     itemcount of an item goes below zero
     */
     public boolean removeItem(String itemName, int itemCount) {
-        if (itemCount < itemList.get(itemName)) {
-            itemList.put(itemName, itemList.get(itemName) - itemCount);
-            return true;
-        } else if (itemCount == itemList.get(itemName)) {
-            itemList.remove(itemName);
-            return true;
-        } else {
-            return false;
+        for (String item : itemList.keySet()) {
+            if (itemName == item) {
+                if (itemCount < itemList.get(itemName)) {
+                    itemList.put(itemName, itemList.get(itemName) - itemCount);
+                    System.out.println("You have now removed " + itemCount + " " + itemName);
+                    return true;
+                } else if (itemCount == itemList.get(itemName)) {
+                    itemList.remove(itemName);
+                    System.out.println("You have now removed " + itemCount + " " + itemName);
+                    return true;
+                } else {
+                    System.out.println("You dont have " + itemCount + " " + itemName);
+                    return false;
+                }
+            } else {
+                System.out.println("You dont have " + itemCount + " " + itemName);
+                return false;
+            }
         }
+        System.out.println("You dont have " + itemCount + " " + itemName);
+        return false;
     }
     
     //getter for item count of an item

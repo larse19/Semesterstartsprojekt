@@ -23,8 +23,8 @@ public class Game {
 
     private final ArrayList<Food> possibleFoods = new ArrayList<Food>();
     private final ArrayList<Ingredient> possiblIngredients = new ArrayList<Ingredient>();
-    private final String[] edible = {"carrot", "milk", "salat", "cucumber"};
-    private final String[] nonEdible = { "corn", "flour", "eggs", "potato" };
+    private final String[] edible = {"tomato", "milk", "cucumber", "potato", "salad"};
+    private final String[] nonEdible = {"corn", "flour", "egg", "butter", "water"};
 
 
 
@@ -42,6 +42,14 @@ public class Game {
         for (String temp : edible) {
             this.possiblIngredients.add(new Ingredient(temp, 1, true));
         }
+        
+        possibleFoods.add(new Food("bread", 5));
+        possibleFoods.add(new Food("fried egg", 1));
+        possibleFoods.add(new Food("boiled egg", 2));
+        possibleFoods.add(new Food("mixed salad", 3));
+        possibleFoods.add(new Food("scalloped potatos", 2));
+        possibleFoods.add(new Food("boiled potatos", 2));
+        possibleFoods.add(new Food("cake", 7));
     }
 
     // A method for assigning all the rooms and setting their exits. (This is where
@@ -50,8 +58,7 @@ public class Game {
     private void createRooms() {
         this.barn = new Barn("in the barn where you can fed your animals and collect their milk and eggs");
 
-        this.kitchen = new Room(
-                "now in the kitchen where you can use all the ingredients you've collected to make prepare food for the people waiting");
+        this.kitchen = new Room("now in the kitchen where you can use all the ingredients you've collected to make prepare food for the people waiting");
 
         this.storefront = new CustomerController("now at the storefront where you can help the starving people");
 
@@ -97,8 +104,7 @@ public class Game {
     // game loop.
     public void play() {
         printWelcome();
-        System.out.println(sb.getScore());
-
+        
         boolean finished = false;
         // The game loop works like this:
         while (!finished) {
@@ -124,10 +130,14 @@ public class Game {
         boolean wantToQuit = false;
 
         CommandWord commandWord = command.getCommandWord();
-
+        
         if (commandWord == CommandWord.UNKNOWN) {
+
             System.out.println("I don't know what you mean...");
             return false;
+        }
+        if (commandWord != CommandWord.UNKNOWN) {
+            tick();
         }
         /**
          * This is where the game handles the commands. add if statements to check what
@@ -177,7 +187,6 @@ public class Game {
         
         else if (commandWord == CommandWord.TEST) {
             System.out.println("This is a test command");
-            
         }
         //Collect products
         else if (commandWord == CommandWord.COLLECT) {
@@ -219,6 +228,12 @@ public class Game {
         else if(commandWord == CommandWord.GRIND) {
             if(correctRoom(this.mill)){
                 this.mill.grindFlour(this.inventory);
+            } else if(correctRoom(this.kitchen)){
+                if(command.getSecondWord() == "butter"){
+                    if(inventory.removeItem("milk", 1)){
+                        inventory.putItem("butter", 1);
+                    }
+                }
             }
         }
         //Give food or edible ingredient to customer
@@ -241,6 +256,8 @@ public class Game {
             if("hp".equals(command.getSecondWord())){
                 System.out.println("The customer has: " + storefront.getHp() + " health.");
             }
+        } else if(commandWord == CommandWord.SCORE){
+            System.out.println("Your current score is: " + sb.getScore());
         }
         return wantToQuit;
     }
