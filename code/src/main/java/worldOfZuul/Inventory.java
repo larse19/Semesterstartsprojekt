@@ -12,7 +12,7 @@ public class Inventory {
         boolean exist = false;
         //Checks if there is room in inventory. 
         //The number of different items, limits the size, there currently isn't a stack limit for each item
-        if (numberOfItems() + itemCount < this.size) {
+        if (numberOfItems() + itemCount <= this.size) {
             for (String i : itemList.keySet()) {
                 if (i == itemName) {
                     itemList.put(i, itemList.get(i) + itemCount);

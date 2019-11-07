@@ -34,7 +34,7 @@ public class Game {
         parser = new Parser();
         this.inventory = new Inventory();
 
-        this.sb = new Scoreboard();
+        sb = new Scoreboard();
 
         for (String temp : nonEdible) {
             this.possiblIngredients.add(new Ingredient(temp));
