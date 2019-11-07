@@ -12,7 +12,7 @@ public class Game {
     private Room currentRoom;
     private static int gameTick;
     //All the rooms
-    private Room kitchen;
+    private CookingSystem kitchen;
     private CustomerController storefront;
     private Field cropfield, cornfield;
     private Mill mill;
@@ -58,13 +58,13 @@ public class Game {
     private void createRooms() {
         this.barn = new Barn("in the barn where you can fed your animals and collect their milk and eggs");
 
-        this.kitchen = new Room("now in the kitchen where you can use all the ingredients you've collected to make prepare food for the people waiting");
+        this.kitchen = new CookingSystem("now in the kitchen where you can use all the ingredients you've collected to make prepare food for the people waiting");
 
         this.storefront = new CustomerController("now at the storefront where you can help the starving people");
 
-        this.cropfield = new Field("now at your cropfield where you can harvest and grow crops", "Potato");
+        this.cropfield = new Field("now at your cropfield where you can harvest and grow crops", "potato");
 
-        this.cornfield = new Field("now at your cornfield where you can harvest and grow more corn", "Corn");
+        this.cornfield = new Field("now at your cornfield where you can harvest and grow more corn", "corn");
         
         this.well = new Well("now at the water well where you can collect fresh water");     
         
@@ -259,6 +259,16 @@ public class Game {
             }
         } else if(commandWord == CommandWord.SCORE){
             System.out.println("Your current score is: " + sb.getScore());
+        }//Cook food in the kitchen
+        else if(commandWord == CommandWord.COOK) {
+            if(correctRoom(this.kitchen)){
+                for(Food food : this.possibleFoods){
+                    if(command.getSecondWord().equals(food.getName())){
+                        this.kitchen.cook(command.getSecondWord(), this.inventory);
+                    }
+                }
+                
+            }
         }
         return wantToQuit;
     }

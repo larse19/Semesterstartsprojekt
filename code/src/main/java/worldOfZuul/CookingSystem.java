@@ -7,11 +7,12 @@ import java.util.HashMap;
 import java.util.Map;
 
 
-public class CookingSystem {
+public class CookingSystem extends Room{
     
     private HashMap<String, HashMap<String, Integer>> recipe;
 
-    public CookingSystem() {
+    public CookingSystem(String description) {
+        super(description);
         this.recipe = new HashMap<>();
         HashMap<String, Integer> bread = new HashMap(Map.of("flour", 1, "water", 1, "egg", 2));
         recipe.put("bread", bread);
