@@ -8,8 +8,20 @@ public class Barn extends Room{
     
     public Barn(String description){
         super(description);
-        cow = new Animal("Cow", "Milk");
-        chicken = new Animal("Chicken", "Egg");
+        cow = new Animal("cow", "milk", "corn", 1, 1);
+        chicken = new Animal("chicken", "egg", "corn", 1, 3);
+    }
+    
+    public Animal getAnimal(String animal){
+        if("cow".equals(animal)){
+            return cow;
+        }
+        else if("chicken".equals(animal)){
+            return chicken;
+        }
+        else{
+            return null;
+        }
     }
 
 }
