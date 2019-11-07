@@ -20,20 +20,21 @@ public class Game {
     private Barn barn;
     private Inventory inventory;
     private static Scoreboard sb;
+  
     private final ArrayList<Ingredient> possiblIngredients = new ArrayList<Ingredient>();
-    // Temporarily disabled until further functionality
-    private final ArrayList<Food> possibleFoods = new ArrayList<Food>();
-    // private final ArrayList<Recipe> possiblRecipes = new ArrayList<Recipe>();
+    private final String[] edible = {"carrot", "milk", "salat", "cucumber"};
+    private final String[] nonEdible = { "corn", "flour", "eggs", "potato" };
+
+
 
     // Constructor for the class game, creates all the rooms and sets up the parser.
     public Game() {
         createRooms();
         parser = new Parser();
         this.inventory = new Inventory();
+
         this.sb = new Scoreboard();
-        // All possible ingredients, food items, and recipe's
-        String[] edible = {"carrot", "milk", "salat", "cucumber"};
-        String[] nonEdible = { "Corn", "flour", "eggs", "potato" };
+
         for (String temp : nonEdible) {
             this.possiblIngredients.add(new Ingredient(temp));
         }
@@ -43,11 +44,7 @@ public class Game {
 
         this.possibleFoods.add(new Food("bread", 5));
         this.possibleFoods.add(new Food("fried egg", 2));
-        // Temporarily disabled until further functionality
-        // this.possibleFoods.add(new Food("Bread", 2));
-        // Temp recipe list
-        // Item[] temp = {new Ingredient("Corn"), new Ingredient("Milk")};
-        // this.possiblRecipes.add(new Recipe(temp , this.possibleFoods.get(0)));
+
     }
 
     // A method for assigning all the rooms and setting their exits. (This is where
@@ -253,9 +250,6 @@ public class Game {
 
     // A method to print the help commands response.
     private void printHelp() {
-        System.out.println("You are lost. You are alone. You wander");
-        System.out.println("around at the university.");
-        System.out.println();
         System.out.println("Your command words are:");
         parser.showCommands();
     }
