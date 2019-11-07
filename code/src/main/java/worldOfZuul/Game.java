@@ -34,7 +34,7 @@ public class Game {
         parser = new Parser();
         this.inventory = new Inventory();
 
-        this.sb = new Scoreboard();
+        sb = new Scoreboard();
 
         for (String temp : nonEdible) {
             this.possiblIngredients.add(new Ingredient(temp));
@@ -111,6 +111,7 @@ public class Game {
             Command command = parser.getCommand();
             finished = processCommand(command);
         }
+        sb.saveHighscore();
         System.out.println("Thank you for playing.  Goodbye.");
     }
 
