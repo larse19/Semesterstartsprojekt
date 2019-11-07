@@ -7,11 +7,12 @@ import java.util.HashMap;
 import java.util.Map;
 
 
-public class CookingSystem {
+public class CookingSystem extends Room{
     
     private HashMap<String, HashMap<String, Integer>> recipe;
 
-    public CookingSystem() {
+    public CookingSystem(String description) {
+        super(description);
         this.recipe = new HashMap<>();
         HashMap<String, Integer> bread = new HashMap(Map.of("flour", 1, "water", 1, "egg", 2));
         recipe.put("bread", bread);
@@ -20,7 +21,7 @@ public class CookingSystem {
         HashMap<String, Integer> friedEgg = new HashMap(Map.of("egg", 1));
         recipe.put("fried egg", friedEgg);
         
-        
+
         HashMap<String, Integer> boiledEgg = new HashMap(Map.of("egg", 1, "water", 1));
         recipe.put("boiled egg", boiledEgg);
        
@@ -55,7 +56,7 @@ public class CookingSystem {
             }
             inv.putItem(foodProduct, 1);
         }
-        else{
+        else {
             System.out.println("You don't have the ingredients needed.");
         }
     }

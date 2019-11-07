@@ -9,7 +9,10 @@ public enum CommandWord
 {
     // List of the words that get registered as commandWords.
 
-    GO("go"), QUIT("quit"), HELP("help"), UNKNOWN("?"), SOW("sow"), HARVEST("harvest"), WATER("water"), TEST("test"), COLLECT("collect"), FEED("feed"), GRIND("grind"), GIVE("give"), CUSTOMER("customer"), SCORE("score"), RECIPE("recipe");
+
+
+    GO("go"), QUIT("quit"), HELP("help"), UNKNOWN("?"), SOW("sow"), HARVEST("harvest"), WATER("water"), TEST("test"), COLLECT("collect"), FEED("feed"), GRIND("grind"), GIVE("give"), CUSTOMER("customer"), SCORE("score"), COOK("cook"), INVENTORY("inventory"), RECIPE("recipe");
+
 
 
     

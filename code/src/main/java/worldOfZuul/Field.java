@@ -34,6 +34,7 @@ public class Field extends Room {
         if (state == 4) {
             return true;
         } else {
+            System.out.println("Not ready to harvest");
             return false;
         }
     }
@@ -46,6 +47,7 @@ public class Field extends Room {
     public void waterCrops() {
         if (state == 1) {
             state++;
+            System.out.println("You have watered the field");
         } else {
             System.out.println("The field cannot be watered right now.");
         }
@@ -54,6 +56,7 @@ public class Field extends Room {
     public void sowField(String inCrop) {
         crop = inCrop;
         state = 1;
+        System.out.println("You have sown " + inCrop);
     }
 
     public void grow(){
