@@ -20,7 +20,8 @@ public class Game {
     private Barn barn;
     private Inventory inventory;
     private static Scoreboard sb;
-  
+
+    private final ArrayList<Food> possibleFoods = new ArrayList<Food>();
     private final ArrayList<Ingredient> possiblIngredients = new ArrayList<Ingredient>();
     private final String[] edible = {"carrot", "milk", "salat", "cucumber"};
     private final String[] nonEdible = { "corn", "flour", "eggs", "potato" };
@@ -41,10 +42,6 @@ public class Game {
         for (String temp : edible) {
             this.possiblIngredients.add(new Ingredient(temp, 1, true));
         }
-
-        this.possibleFoods.add(new Food("bread", 5));
-        this.possibleFoods.add(new Food("fried egg", 2));
-
     }
 
     // A method for assigning all the rooms and setting their exits. (This is where
