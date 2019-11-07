@@ -56,7 +56,7 @@ public class CookingSystem extends Room{
             }
             inv.putItem(foodProduct, 1);
         }
-        else{
+        else {
             System.out.println("You don't have the ingredients needed.");
         }
     }

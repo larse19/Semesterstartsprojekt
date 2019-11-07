@@ -47,7 +47,7 @@ public class Inventory {
     */
     public boolean removeItem(String itemName, int itemCount) {
         for (String item : itemList.keySet()) {
-            if (itemName == item) {
+            if (itemName.equals(item)) {
                 if (itemCount < itemList.get(itemName)) {
                     itemList.put(itemName, itemList.get(itemName) - itemCount);
                     System.out.println("You have now removed " + itemCount + " " + itemName);
@@ -60,9 +60,6 @@ public class Inventory {
                     System.out.println("You dont have " + itemCount + " " + itemName);
                     return false;
                 }
-            } else {
-                System.out.println("You dont have " + itemCount + " " + itemName);
-                return false;
             }
         }
         System.out.println("You dont have " + itemCount + " " + itemName);

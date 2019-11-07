@@ -6,7 +6,7 @@ public class Well extends Room {
     }
     
     public void collectWater(Inventory inventory) {
-        inventory.putItem("Water", 1);
+        inventory.putItem("water", 1);
     }
             
             
