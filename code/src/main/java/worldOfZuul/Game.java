@@ -23,8 +23,8 @@ public class Game {
 
     private final ArrayList<Food> possibleFoods = new ArrayList<Food>();
     private final ArrayList<Ingredient> possiblIngredients = new ArrayList<Ingredient>();
-    private final String[] edible = {"carrot", "milk", "salat", "cucumber"};
-    private final String[] nonEdible = { "corn", "flour", "eggs", "potato" };
+    private final String[] edible = {"tomato", "milk", "cucumber", "potato", "salad"};
+    private final String[] nonEdible = {"corn", "flour", "egg", "butter", "water"};
 
 
 
@@ -42,6 +42,14 @@ public class Game {
         for (String temp : edible) {
             this.possiblIngredients.add(new Ingredient(temp, 1, true));
         }
+        
+        possibleFoods.add(new Food("bread", 5));
+        possibleFoods.add(new Food("fried egg", 1));
+        possibleFoods.add(new Food("boiled egg", 2));
+        possibleFoods.add(new Food("mixed salad", 3));
+        possibleFoods.add(new Food("scalloped potatos", 2));
+        possibleFoods.add(new Food("boiled potatos", 2));
+        possibleFoods.add(new Food("cake", 7));
     }
 
     // A method for assigning all the rooms and setting their exits. (This is where
@@ -180,7 +188,6 @@ public class Game {
         
         else if (commandWord == CommandWord.TEST) {
             System.out.println("This is a test command");
-            
         }
         //Collect products
         else if (commandWord == CommandWord.COLLECT) {
@@ -222,6 +229,12 @@ public class Game {
         else if(commandWord == CommandWord.GRIND) {
             if(correctRoom(this.mill)){
                 this.mill.grindFlour(this.inventory);
+            } else if(correctRoom(this.kitchen)){
+                if(command.getSecondWord() == "butter"){
+                    if(inventory.removeItem("milk", 1)){
+                        inventory.putItem("butter", 1);
+                    }
+                }
             }
         }
         //Give food or edible ingredient to customer

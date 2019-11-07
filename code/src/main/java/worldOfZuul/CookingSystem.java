@@ -16,31 +16,27 @@ public class CookingSystem {
         HashMap<String, Integer> bread = new HashMap(Map.of("flour", 1, "water", 1, "egg", 2));
         recipe.put("bread", bread);
         
-        this.recipe = new HashMap<>();
+        
         HashMap<String, Integer> friedEgg = new HashMap(Map.of("egg", 1));
         recipe.put("fried egg", friedEgg);
         
-        this.recipe = new HashMap<>();
-        HashMap<String, Integer> boiledEgg = new HashMap(Map.of("egg", 1));
+        
+        HashMap<String, Integer> boiledEgg = new HashMap(Map.of("egg", 1, "water", 1));
         recipe.put("boiled egg", boiledEgg);
        
-        this.recipe = new HashMap<>();
-        HashMap<String, Integer> salad = new HashMap(Map.of("tomato", 1, "cucumber", 1, "salad", 1));
-        recipe.put("salad", salad);
         
-        this.recipe = new HashMap<>();
+        HashMap<String, Integer> salad = new HashMap(Map.of("tomato", 1, "cucumber", 1, "salad", 1));
+        recipe.put("mixed salad", salad);
+        
+        
         HashMap<String, Integer> scallopedPotatos = new HashMap(Map.of("potato", 1, "milk", 1));
         recipe.put("scalloped potatos", scallopedPotatos);
         
-        this.recipe = new HashMap<>();
-        HashMap<String, Integer> boiledPotato = new HashMap(Map.of("potato", 1));
+        
+        HashMap<String, Integer> boiledPotato = new HashMap(Map.of("potato", 1, "water", 1));
         recipe.put("boiled potato", boiledPotato);
+
         
-        this.recipe = new HashMap<>();
-        HashMap<String, Integer> butter = new HashMap(Map.of("milk", 1));
-        recipe.put("butter", butter);
-        
-        this.recipe = new HashMap<>();
         HashMap<String, Integer> cake = new HashMap(Map.of("milk", 1, "flour", 1, "egg", 1, "butter", 1));
         recipe.put("cake", cake);
         
