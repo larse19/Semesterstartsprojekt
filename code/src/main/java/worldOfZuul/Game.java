@@ -58,8 +58,7 @@ public class Game {
     private void createRooms() {
         this.barn = new Barn("in the barn where you can fed your animals and collect their milk and eggs");
 
-        this.kitchen = new Room(
-                "now in the kitchen where you can use all the ingredients you've collected to make prepare food for the people waiting");
+        this.kitchen = new Room("now in the kitchen where you can use all the ingredients you've collected to make prepare food for the people waiting");
 
         this.storefront = new CustomerController("now at the storefront where you can help the starving people");
 
