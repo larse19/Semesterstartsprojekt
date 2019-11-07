@@ -106,6 +106,7 @@ public class Game {
             finished = processCommand(command);
         }
         System.out.println("Thank you for playing.  Goodbye.");
+        
     }
 
     // Method for showing the welcome message, this can be redefined in this method.
@@ -127,6 +128,10 @@ public class Game {
 
         if (commandWord == CommandWord.UNKNOWN) {
             System.out.println("I don't know what you mean...");
+            return false;
+        }
+        if(!parser.secondWordIsValid(command.getSecondWord())){
+            System.out.println(commandWord + " what?");
             return false;
         }
         /**
@@ -241,6 +246,11 @@ public class Game {
             if("hp".equals(command.getSecondWord())){
                 System.out.println("The customer has: " + storefront.getHp() + " health.");
             }
+
+
+        }
+        else if(commandWord == CommandWord.INVENTORY){
+            this.inventory.toString();
         }
         return wantToQuit;
     }

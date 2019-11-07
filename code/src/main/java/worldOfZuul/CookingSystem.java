@@ -21,7 +21,7 @@ public class CookingSystem {
         recipe.put("fried egg", friedEgg);
         
         this.recipe = new HashMap<>();
-        HashMap<String, Integer> boiledEgg = new HashMap(Map.of("egg", 1));
+        HashMap<String, Integer> boiledEgg = new HashMap(Map.of("egg", 1, "water", 1));
         recipe.put("boiled egg", boiledEgg);
        
         this.recipe = new HashMap<>();
