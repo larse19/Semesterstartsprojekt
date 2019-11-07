@@ -138,10 +138,9 @@ public class Game {
         if (!parser.secondWordIsValid(command.getSecondWord())) {
             System.out.println(commandWord + " what?");
             return false;
-
+        }
         if (commandWord != CommandWord.UNKNOWN) {
             tick();
-
         }
         /**
          * This is where the game handles the commands. add if statements to
@@ -169,7 +168,7 @@ public class Game {
         else if (commandWord == CommandWord.HARVEST) {
             if(correctRoom(this.cropfield, this.cornfield)){
                 if(getField().isReadyToHarvest()){
-                    this.inventory.putItem(getField().getCrop(), 1);
+                    this.inventory.putItem(getField().getCrop(), 4);
                 }
             }
             
