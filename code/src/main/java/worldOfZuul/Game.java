@@ -97,8 +97,7 @@ public class Game {
     // game loop.
     public void play() {
         printWelcome();
-        System.out.println(sb.getScore());
-
+        
         boolean finished = false;
         // The game loop works like this:
         while (!finished) {
@@ -124,10 +123,14 @@ public class Game {
         boolean wantToQuit = false;
 
         CommandWord commandWord = command.getCommandWord();
-
+        
         if (commandWord == CommandWord.UNKNOWN) {
+
             System.out.println("I don't know what you mean...");
             return false;
+        }
+        if (commandWord != CommandWord.UNKNOWN) {
+            tick();
         }
         /**
          * This is where the game handles the commands. add if statements to check what
@@ -241,6 +244,8 @@ public class Game {
             if("hp".equals(command.getSecondWord())){
                 System.out.println("The customer has: " + storefront.getHp() + " health.");
             }
+        } else if(commandWord == CommandWord.SCORE){
+            System.out.println("Your current score is: " + sb.getScore());
         }
         return wantToQuit;
     }
