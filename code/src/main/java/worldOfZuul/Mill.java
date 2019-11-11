@@ -6,8 +6,8 @@ public class Mill extends Room {
     }
     
     public void grindFlour(Inventory inventory) {
-        inventory.removeItem("Corn", 1);
-        inventory.putItem("Flour", 1);
+        inventory.removeItem("corn", 1);
+        inventory.putItem("flour", 1);
         
     }
     

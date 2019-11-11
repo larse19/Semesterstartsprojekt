@@ -228,7 +228,7 @@ public class Game {
             if (correctRoom(this.mill)) {
                 this.mill.grindFlour(this.inventory);
             } else if(correctRoom(this.kitchen)){
-                if(command.getSecondWord() == "butter"){
+                if("milk".equals(command.getSecondWord())){
                     if(inventory.removeItem("milk", 1)){
                         inventory.putItem("butter", 1);
                     }
