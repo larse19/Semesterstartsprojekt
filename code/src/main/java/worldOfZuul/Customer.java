@@ -14,7 +14,8 @@ public class Customer {
         currentHp = rand.nextInt(4) + 3;
         startTick = Game.getTick();
         startHp = currentHp;
-        System.out.println(currentHp);
+        System.out.println("\n" + "A new customer has arrived. The current"
+                + " customer HP is: " + currentHp + "HP.");
         tickCounter = 0;
         totalDmg = 0;
     }
