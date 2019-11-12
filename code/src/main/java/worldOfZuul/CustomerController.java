@@ -60,8 +60,6 @@ public class CustomerController extends Room {
                 System.out.println("You can't eat " + ingredient.getName());
             }
         }
-        Scoreboard sb = Game.getScoreboard();
-        sb.addPoints(item.getSaturation());
 
     }
 
