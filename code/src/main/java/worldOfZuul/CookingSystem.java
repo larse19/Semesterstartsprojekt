@@ -3,6 +3,7 @@ package worldOfZuul;
 
 //This Class creates a Food object, 
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -75,12 +76,12 @@ public class CookingSystem extends Room{
         return hasAllItems;
     }
 
-    public void printRecipe() {
+    public void printRecipe(ArrayList<Food> list) {
         System.out.println("All the available recipes are:");
-        for (String food : this.recipe.keySet()) {
-            System.out.println("  " + food);
-            for (String ing : this.recipe.get(food).keySet()) {
-                System.out.println("    " + this.recipe.get(food).get(ing) + " " + ing);
+        for (Food food : list) {
+            System.out.println("  " + food.getName() + "    Saturation: " + food.getSaturation());
+            for (String ing : this.recipe.get(food.getName()).keySet()) {
+                System.out.println("    " + this.recipe.get(food.getName()).get(ing) + " " + ing);
             }
             System.out.println("");
         }

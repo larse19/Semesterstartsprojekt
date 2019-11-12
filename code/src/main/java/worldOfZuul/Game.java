@@ -18,7 +18,7 @@ public class Game {
     private Mill mill;
     private Well well;
     private Barn barn;
-    
+
     private Inventory inventory;
     private static Scoreboard sb;
     private Account account;
@@ -29,7 +29,7 @@ public class Game {
 
     private final String[] edible = {"tomato", "milk", "cucumber", "potato", "salad"};
     private final String[] nonEdible = {"corn", "flour", "egg", "butter", "water"};
-
+    private final String[] crops = {"corn", "potato"};
 
     // Constructor for the class game, creates all the rooms and sets up the parser.
     public Game() {
@@ -46,13 +46,13 @@ public class Game {
         for (String temp : edible) {
             this.possiblIngredients.add(new Ingredient(temp, 1, true));
         }
-        
+
         possibleFoods.add(new Food("bread", 5));
         possibleFoods.add(new Food("fried egg", 1));
         possibleFoods.add(new Food("boiled egg", 2));
         possibleFoods.add(new Food("mixed salad", 3));
         possibleFoods.add(new Food("scalloped potatos", 2));
-        possibleFoods.add(new Food("boiled potatos", 2));
+        possibleFoods.add(new Food("boiled potato", 2));
         possibleFoods.add(new Food("cake", 7));
     }
 
@@ -68,9 +68,9 @@ public class Game {
         this.cropfield = new Field("now at your cropfield where you can harvest and grow crops", "potato");
 
         this.cornfield = new Field("now at your cornfield where you can harvest and grow more corn", "corn");
-        
-        this.well = new Well("now at the water well where you can collect fresh water");     
-        
+
+        this.well = new Well("now at the water well where you can collect fresh water");
+
         this.mill = new Mill("now at the mill where you can grind your corn to get flour");
 
         this.storefront.setExit("north", kitchen);
@@ -104,19 +104,26 @@ public class Game {
     // game loop.
     public void play() {
         printWelcome();
-        
+
         boolean finished = false;
         // The game loop works like this:
         while (!finished) {
             Command command = parser.getCommand();
             finished = processCommand(command);
-            if(this.account.getBalance() <= 0){
+            if (this.account.getBalance() <= 0) {
                 System.out.println("You have run out of money :C");
                 finished = true;
             }
         }
-        System.out.println("Your score is:" + sb.getScore());
+        System.out.println("Your score is: " + sb.getScore());
         sb.saveHighscore();
+        System.out.println("Highscores:");
+        for(int i = 0; i<sb.getHighscores().size(); i++){
+                System.out.println(sb.getHighscores().get(i));
+                if(i >= 4){
+                    break;
+                }
+            }
         System.out.println("Thank you for playing.  Goodbye.");
 
     }
@@ -137,7 +144,7 @@ public class Game {
         boolean wantToQuit = false;
 
         CommandWord commandWord = command.getCommandWord();
-        
+
         if (commandWord == CommandWord.UNKNOWN) {
 
             System.out.println("I don't know what you mean...");
@@ -147,10 +154,10 @@ public class Game {
         if (!parser.secondWordIsValid(command.getSecondWord())) {
             System.out.println(commandWord + " what?");
             return false;
-        }
+        }/*
         if (commandWord != CommandWord.UNKNOWN) {
             tick();
-        }
+        }*/
         /**
          * This is where the game handles the commands. add if statements to
          * check what command has been inputtet Then check what room you are in,
@@ -164,48 +171,71 @@ public class Game {
             printHelp();
         } else if (commandWord == CommandWord.GO) {
             goRoom(command);
+            tick();
         } else if (commandWord == CommandWord.QUIT) {
             wantToQuit = quit(command);
 
         } //Sow crops
         else if (commandWord == CommandWord.SOW) {
-            if(correctRoom(this.cropfield, this.cornfield)){
-                getField().sowField(command.getSecondWord());
-            }            
-            
+            if (correctRoom(this.cropfield, this.cornfield)) {
+                boolean correct = false;
+                for (String crop : crops) {
+                    if (command.getSecondWord().equals(crop)) {
+                        getField().sowField(command.getSecondWord(), this.inventory);
+                        correct = true;
+                        tick();
+                    }
+                }
+                if (!correct) {
+                    System.out.println("You can't plant " + command.getSecondWord());
+                }
+
+            }
+
         } //Harvest crops
         else if (commandWord == CommandWord.HARVEST) {
-            if(correctRoom(this.cropfield, this.cornfield)){
-                if(getField().isReadyToHarvest()){
-                    this.inventory.putItem(getField().getCrop(), 4);
+            if (command.getSecondWord() == null || command.getSecondWord().equals(getField().getCrop())) {
+                if (correctRoom(this.cropfield, this.cornfield)) {
+                    if (getField().isReadyToHarvest()) {
+                        getField().harvest(this.inventory);
+                        tick();
+                    }
+                }
+            } else {
+                if (getField().getCrop() != null) {
+                    System.out.println("This field only has " + getField().getCrop() + " in it.");
+                }
+                else{
+                    System.out.println("Nothing is plantet here.");
                 }
             }
-            
+
         } //Water crops
         else if (commandWord == CommandWord.WATER) {
 
-            if(correctRoom(this.cornfield, this.cropfield)){
-                getField().waterCrops();
-            }        
+            if (correctRoom(this.cornfield, this.cropfield)) {
+                tick();
+                getField().waterCrops(this.inventory);
+            }
             
-        } else if (commandWord == CommandWord.TEST) {
-            System.out.println("This is a test command");
-
-        } //Collect products
+        }//Collect products
         else if (commandWord == CommandWord.COLLECT) {
             if ("milk".equals(command.getSecondWord())) {
                 if (correctRoom(this.barn)) {
                     Animal cow = this.barn.getAnimal("cow");
                     cow.collectProduct(this.inventory);
+                    tick();
                 }
             } else if ("eggs".equals(command.getSecondWord())) {
                 if (correctRoom(this.barn)) {
                     Animal chicken = this.barn.getAnimal("chicken");
                     chicken.collectProduct(this.inventory);
+                    tick();
                 }
             } else if ("water".equals(command.getSecondWord())) {
                 if (correctRoom(this.well)) {
                     this.well.collectWater(this.inventory);
+                    tick();
                 }
             }
         } //Feed cow or chicken
@@ -215,22 +245,26 @@ public class Game {
 
                     Animal cow = this.barn.getAnimal("cow");
                     cow.feed(this.inventory);
+                    tick();
                 }
             }
             if ("chicken".equals(command.getSecondWord())) {
                 if (correctRoom(this.barn)) {
                     Animal chicken = this.barn.getAnimal("chicken");
                     chicken.feed(this.inventory);
+                    tick();
                 }
             }
         } //Grind corn to flour
         else if (commandWord == CommandWord.GRIND) {
             if (correctRoom(this.mill)) {
                 this.mill.grindFlour(this.inventory);
-            } else if(correctRoom(this.kitchen)){
-                if("milk".equals(command.getSecondWord())){
-                    if(inventory.removeItem("milk", 1)){
+                tick();
+            } else if (correctRoom(this.kitchen)) {
+                if ("milk".equals(command.getSecondWord())) {
+                    if (inventory.removeItem("milk", 1)) {
                         inventory.putItem("butter", 1);
+                        tick();
                     }
                 }
             }
@@ -256,21 +290,27 @@ public class Game {
         } else if (commandWord == CommandWord.INVENTORY) {
             this.inventory.toString();
 
-        } else if(commandWord == CommandWord.SCORE){
+        } else if (commandWord == CommandWord.SCORE) {
             System.out.println("Your current score is: " + sb.getScore());
 
-        } else if(commandWord == CommandWord.RECIPE){
-            this.kitchen.printRecipe();
+        } else if (commandWord == CommandWord.RECIPE) {
+            this.kitchen.printRecipe(this.possibleFoods);
+        }
 
-        }//Cook food in the kitchen
-        else if(commandWord == CommandWord.COOK) {
-            if(correctRoom(this.kitchen)){
-                for(Food food : this.possibleFoods){
-                    if(command.getSecondWord().equals(food.getName())){
+        else if(commandWord == CommandWord.BALANCE){
+            System.out.println(this.account.getBalance());
+        }
+        
+        //Cook food in the kitchen
+        else if (commandWord == CommandWord.COOK) {
+            if (correctRoom(this.kitchen)) {
+                for (Food food : this.possibleFoods) {
+                    if (command.getSecondWord().equals(food.getName())) {
                         this.kitchen.cook(command.getSecondWord(), this.inventory);
+                        tick();
                     }
                 }
-                
+
             }
         }
         return wantToQuit;
@@ -310,9 +350,9 @@ public class Game {
             return true;
         }
     }
-    
-    private Field getField(){
-        return (Field)currentRoom;
+
+    private Field getField() {
+        return (Field) currentRoom;
     }
 
     public static int getTick() {
@@ -329,7 +369,7 @@ public class Game {
                 res = false;
             }
         }
-        if(!res){
+        if (!res) {
             System.out.println("This command can't be used in this room");
         }
         return res;
