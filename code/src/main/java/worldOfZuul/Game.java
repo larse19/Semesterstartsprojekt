@@ -31,7 +31,6 @@ public class Game {
     private final String[] nonEdible = {"corn", "flour", "egg", "butter", "water"};
     private final String[] crops = {"corn", "potato"};
 
-
     // Constructor for the class game, creates all the rooms and sets up the parser.
     public Game() {
         createRooms();
@@ -86,7 +85,6 @@ public class Game {
 
         this.barn.setExit("west", kitchen);
         this.barn.setExit("north", mill);
-        
 
         this.cornfield.setExit("west", well);
         this.cornfield.setExit("east", mill);
@@ -120,12 +118,12 @@ public class Game {
         System.out.println("Your score is: " + sb.getScore());
         sb.saveHighscore();
         System.out.println("Highscores:");
-        for(int i = 0; i<sb.getHighscores().size(); i++){
-                System.out.println(sb.getHighscores().get(i));
-                if(i >= 4){
-                    break;
-                }
+        for (int i = 0; i < sb.getHighscores().size(); i++) {
+            System.out.println(sb.getHighscores().get(i));
+            if (i >= 4) {
+                break;
             }
+        }
         System.out.println("Thank you for playing.  Goodbye.");
 
     }
@@ -208,8 +206,7 @@ public class Game {
             } else {
                 if (getField().getCrop() != null) {
                     System.out.println("This field only has " + getField().getCrop() + " in it.");
-                }
-                else{
+                } else {
                     System.out.println("Nothing is plantet here.");
 
                 }
@@ -223,9 +220,8 @@ public class Game {
                 tick();
                 getField().waterCrops(this.inventory);
             }
-            
-        }//Collect products
 
+        }//Collect products
         else if (commandWord == CommandWord.COLLECT) {
             if ("milk".equals(command.getSecondWord())) {
                 if (correctRoom(this.barn)) {
@@ -265,9 +261,12 @@ public class Game {
         } //Grind corn to flour
         else if (commandWord == CommandWord.GRIND) {
             if (correctRoom(this.mill)) {
+                if(command.getSecondWord() == null || "corn".equals(command.getSecondWord())){
                 this.mill.grindFlour(this.inventory);
-
-                tick();
+                tick();}
+                else{
+                    System.out.println("You can't grind " + command.getSecondWord());
+                }
 
             } else if (correctRoom(this.kitchen)) {
                 if ("milk".equals(command.getSecondWord())) {
@@ -322,12 +321,12 @@ public class Game {
                 }
 
             }
-        }
-        return wantToQuit;
-    }
-      else if(commandWord == CommandWord.BALANCE){
+        } else if (commandWord == CommandWord.BALANCE) {
             System.out.println(this.account.getBalance());
         }
+        return wantToQuit;
+
+    }
 
     // A method to print the help commands response.
     private void printHelp() {

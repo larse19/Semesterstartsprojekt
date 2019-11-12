@@ -35,6 +35,10 @@ public class Customer {
     public int getTick() {
         return startTick;
     }
+    
+    public void setTick(int tick){
+        this.tickCounter = tick;
+    }
 
     public void damage() {
         if (this.tickCounter == 10) {

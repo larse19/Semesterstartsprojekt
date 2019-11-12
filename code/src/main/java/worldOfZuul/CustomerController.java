@@ -41,6 +41,7 @@ public class CustomerController extends Room {
 
                 currentCustomer.addHP(sat);
                 System.out.println("The customer feasts on the " + food.getName() + " and gains " + food.getSaturation() + " hp!");
+                currentCustomer.setTick(0);
                 fullyFed();
             } else {
                 System.out.println("You don't have any " + food.getName());
@@ -52,6 +53,7 @@ public class CustomerController extends Room {
                     int sat = ingredient.getSaturation();
                     currentCustomer.addHP(sat);
                     System.out.println("The customer consumes the " + ingredient.getName() + " and gains " + ingredient.getSaturation() + " hp!");
+                    currentCustomer.setTick(0);
                     fullyFed();
                 } else {
                     System.out.println("You don't have any " + ingredient.getName());
@@ -70,6 +72,7 @@ public class CustomerController extends Room {
             sb.addPoints(currentCustomer.getGainedScore());
 
         }
+        
         currentCustomer = new Customer();
     }
 
