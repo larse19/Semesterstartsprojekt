@@ -115,8 +115,15 @@ public class Game {
                 finished = true;
             }
         }
-        System.out.println("Your score is:" + sb.getScore());
+        System.out.println("Your score is: " + sb.getScore());
         sb.saveHighscore();
+        System.out.println("Highscores:");
+        for(int i = 0; i<sb.getHighscores().size(); i++){
+                System.out.println(sb.getHighscores().get(i));
+                if(i >= 4){
+                    break;
+                }
+            }
         System.out.println("Thank you for playing.  Goodbye.");
 
     }
@@ -147,10 +154,10 @@ public class Game {
         if (!parser.secondWordIsValid(command.getSecondWord())) {
             System.out.println(commandWord + " what?");
             return false;
-        }
+        }/*
         if (commandWord != CommandWord.UNKNOWN) {
             tick();
-        }
+        }*/
         /**
          * This is where the game handles the commands. add if statements to
          * check what command has been inputtet Then check what room you are in,
@@ -164,6 +171,7 @@ public class Game {
             printHelp();
         } else if (commandWord == CommandWord.GO) {
             goRoom(command);
+            tick();
         } else if (commandWord == CommandWord.QUIT) {
             wantToQuit = quit(command);
 
@@ -175,6 +183,7 @@ public class Game {
                     if (command.getSecondWord().equals(crop)) {
                         getField().sowField(command.getSecondWord(), this.inventory);
                         correct = true;
+                        tick();
                     }
                 }
                 if (!correct) {
@@ -189,6 +198,7 @@ public class Game {
                 if (correctRoom(this.cropfield, this.cornfield)) {
                     if (getField().isReadyToHarvest()) {
                         getField().harvest(this.inventory);
+                        tick();
                     }
                 }
             } else {
@@ -204,27 +214,28 @@ public class Game {
         else if (commandWord == CommandWord.WATER) {
 
             if (correctRoom(this.cornfield, this.cropfield)) {
+                tick();
                 getField().waterCrops(this.inventory);
             }
-
-        } else if (commandWord == CommandWord.TEST) {
-            System.out.println("This is a test command");
-
-        } //Collect products
+            
+        }//Collect products
         else if (commandWord == CommandWord.COLLECT) {
             if ("milk".equals(command.getSecondWord())) {
                 if (correctRoom(this.barn)) {
                     Animal cow = this.barn.getAnimal("cow");
                     cow.collectProduct(this.inventory);
+                    tick();
                 }
             } else if ("eggs".equals(command.getSecondWord())) {
                 if (correctRoom(this.barn)) {
                     Animal chicken = this.barn.getAnimal("chicken");
                     chicken.collectProduct(this.inventory);
+                    tick();
                 }
             } else if ("water".equals(command.getSecondWord())) {
                 if (correctRoom(this.well)) {
                     this.well.collectWater(this.inventory);
+                    tick();
                 }
             }
         } //Feed cow or chicken
@@ -234,22 +245,26 @@ public class Game {
 
                     Animal cow = this.barn.getAnimal("cow");
                     cow.feed(this.inventory);
+                    tick();
                 }
             }
             if ("chicken".equals(command.getSecondWord())) {
                 if (correctRoom(this.barn)) {
                     Animal chicken = this.barn.getAnimal("chicken");
                     chicken.feed(this.inventory);
+                    tick();
                 }
             }
         } //Grind corn to flour
         else if (commandWord == CommandWord.GRIND) {
             if (correctRoom(this.mill)) {
                 this.mill.grindFlour(this.inventory);
+                tick();
             } else if (correctRoom(this.kitchen)) {
                 if ("milk".equals(command.getSecondWord())) {
                     if (inventory.removeItem("milk", 1)) {
                         inventory.putItem("butter", 1);
+                        tick();
                     }
                 }
             }
@@ -280,13 +295,19 @@ public class Game {
 
         } else if (commandWord == CommandWord.RECIPE) {
             this.kitchen.printRecipe(this.possibleFoods);
+        }
 
-        }//Cook food in the kitchen
+        else if(commandWord == CommandWord.BALANCE){
+            System.out.println(this.account.getBalance());
+        }
+        
+        //Cook food in the kitchen
         else if (commandWord == CommandWord.COOK) {
             if (correctRoom(this.kitchen)) {
                 for (Food food : this.possibleFoods) {
                     if (command.getSecondWord().equals(food.getName())) {
                         this.kitchen.cook(command.getSecondWord(), this.inventory);
+                        tick();
                     }
                 }
 
