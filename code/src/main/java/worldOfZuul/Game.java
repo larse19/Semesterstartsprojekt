@@ -52,7 +52,7 @@ public class Game {
         possibleFoods.add(new Food("boiled egg", 2));
         possibleFoods.add(new Food("mixed salad", 3));
         possibleFoods.add(new Food("scalloped potatos", 2));
-        possibleFoods.add(new Food("boiled potatos", 2));
+        possibleFoods.add(new Food("boiled potato", 2));
         possibleFoods.add(new Food("cake", 7));
     }
 
@@ -279,7 +279,7 @@ public class Game {
             System.out.println("Your current score is: " + sb.getScore());
 
         } else if (commandWord == CommandWord.RECIPE) {
-            this.kitchen.printRecipe();
+            this.kitchen.printRecipe(this.possibleFoods);
 
         }//Cook food in the kitchen
         else if (commandWord == CommandWord.COOK) {
