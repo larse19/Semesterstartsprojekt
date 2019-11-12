@@ -11,7 +11,7 @@ public class Animal {
     public Animal(String name, String product) {
         this.name = name;
         this.product = product;
-        this.animalFood = "grain";
+        this.animalFood = "corn";
         fed = false;
         this.foodAmount = 1;
         this.yieldCount = 1;

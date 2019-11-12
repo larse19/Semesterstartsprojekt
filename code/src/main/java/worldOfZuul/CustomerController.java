@@ -21,6 +21,7 @@ public class CustomerController extends Room {
             Scoreboard sb = Game.getScoreboard();
             sb.addPoints(points * (-1));
             newCustomer();
+            System.out.println("Your current customer died... ");
         }
     }
 

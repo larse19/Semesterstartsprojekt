@@ -31,6 +31,7 @@ public class Game {
     private final String[] nonEdible = {"corn", "flour", "egg", "butter", "water"};
     private final String[] crops = {"corn", "potato"};
 
+
     // Constructor for the class game, creates all the rooms and sets up the parser.
     public Game() {
         createRooms();
@@ -84,10 +85,11 @@ public class Game {
         this.well.setExit("south", cropfield);
 
         this.barn.setExit("west", kitchen);
-
         this.barn.setExit("north", mill);
+        
 
         this.cornfield.setExit("west", well);
+        this.cornfield.setExit("east", mill);
         this.cornfield.setExit("south", kitchen);
 
         this.cropfield.setExit("north", well);
@@ -178,6 +180,7 @@ public class Game {
         } //Sow crops
         else if (commandWord == CommandWord.SOW) {
             if (correctRoom(this.cropfield, this.cornfield)) {
+
                 boolean correct = false;
                 for (String crop : crops) {
                     if (command.getSecondWord().equals(crop)) {
@@ -194,6 +197,7 @@ public class Game {
 
         } //Harvest crops
         else if (commandWord == CommandWord.HARVEST) {
+
             if (command.getSecondWord() == null || command.getSecondWord().equals(getField().getCrop())) {
                 if (correctRoom(this.cropfield, this.cornfield)) {
                     if (getField().isReadyToHarvest()) {
@@ -207,6 +211,7 @@ public class Game {
                 }
                 else{
                     System.out.println("Nothing is plantet here.");
+
                 }
             }
 
@@ -214,11 +219,13 @@ public class Game {
         else if (commandWord == CommandWord.WATER) {
 
             if (correctRoom(this.cornfield, this.cropfield)) {
+
                 tick();
                 getField().waterCrops(this.inventory);
             }
             
         }//Collect products
+
         else if (commandWord == CommandWord.COLLECT) {
             if ("milk".equals(command.getSecondWord())) {
                 if (correctRoom(this.barn)) {
@@ -259,7 +266,9 @@ public class Game {
         else if (commandWord == CommandWord.GRIND) {
             if (correctRoom(this.mill)) {
                 this.mill.grindFlour(this.inventory);
+
                 tick();
+
             } else if (correctRoom(this.kitchen)) {
                 if ("milk".equals(command.getSecondWord())) {
                     if (inventory.removeItem("milk", 1)) {
@@ -294,27 +303,31 @@ public class Game {
             System.out.println("Your current score is: " + sb.getScore());
 
         } else if (commandWord == CommandWord.RECIPE) {
-            this.kitchen.printRecipe(this.possibleFoods);
-        }
 
-        else if(commandWord == CommandWord.BALANCE){
-            System.out.println(this.account.getBalance());
-        }
-        
-        //Cook food in the kitchen
+            this.kitchen.printRecipe(this.possibleFoods);
+
+        }//Cook food in the kitchen
         else if (commandWord == CommandWord.COOK) {
             if (correctRoom(this.kitchen)) {
-                for (Food food : this.possibleFoods) {
-                    if (command.getSecondWord().equals(food.getName())) {
-                        this.kitchen.cook(command.getSecondWord(), this.inventory);
-                        tick();
+                if (command.getSecondWord() != null) {
+                    for (Food food : this.possibleFoods) {
+                        if (command.getSecondWord().equals(food.getName())) {
+                            this.kitchen.cook(command.getSecondWord(), this.inventory);
+                            tick();
+                        }
+
                     }
+                } else if (command.getSecondWord() == null) {
+                    System.out.println(CommandWord.COOK + " what?");
                 }
 
             }
         }
         return wantToQuit;
     }
+      else if(commandWord == CommandWord.BALANCE){
+            System.out.println(this.account.getBalance());
+        }
 
     // A method to print the help commands response.
     private void printHelp() {
