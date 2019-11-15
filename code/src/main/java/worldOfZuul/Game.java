@@ -133,7 +133,14 @@ public class Game {
         System.out.println();
         System.out.println("Welcome to the Hunger Games!");
         System.out.println("Hunger games is a game about resource management and feeding the poor to end world hunger");
+        System.out.println();
+        System.out.println("Your job is to walk around the kitchen and farms, to collect ingredients to make food, to feed the starving");
+        System.out.println("people coming in.");
+        System.out.println("You are able to plant and harvest crops in the two fields, you can collect water at the well, you can grind corn to flour in the mill,");
+        System.out.println("you can feed and collect produce from the animals at the barn, and you can cook meals in the kitchen.");
         System.out.println("Type '" + CommandWord.HELP + "' if you need help.");
+        System.out.println();
+        printMap();
         System.out.println();
         System.out.println(currentRoom.getLongDescription());
     }
@@ -327,11 +334,29 @@ public class Game {
         return wantToQuit;
 
     }
+    
+    private void printMap(){
+        System.out.println("Map:");
+        System.out.println("-----------------------------------------");
+        System.out.println("|  Water well  |  Cornfield  |   Mill   |");
+        System.out.println("-----------------------------------------");
+        System.out.println("|  Cropfield   |  Kitchen    |   Barn   |");
+        System.out.println("-----------------------------------------");
+        System.out.println("               |  Storefront |           ");
+        System.out.println("               ---------------");
+    }
 
     // A method to print the help commands response.
     private void printHelp() {
         System.out.println("Your command words are:");
         parser.showCommands();
+        System.out.println();
+        System.out.println("Hint: Crops need water to grow.");
+        System.out.println("Hint: Animals eat corn.");
+        System.out.println("Hint: use \"grind\" in the kitchen, to make butter");
+        System.out.println("Write \"customer hp\" to see the current hp of the customer");
+        System.out.println();
+        printMap();
     }
 
     // A method to change the current room, it does this from a given command.
